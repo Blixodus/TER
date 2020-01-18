@@ -1,1 +1,1 @@
-# TER_ModStoReacBioChi
+# TER Modélisation Stochastique des Réactions Biochimiques
