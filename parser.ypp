@@ -2,12 +2,12 @@
 
 %}
 
-%token TYPE DIAM SIZE SPEED INIT ID FLOAT INT COMMENT
+%token TYPE DIAM SIZE SPEED INIT ID FLOAT INT
 %token COMMA SEMI OPARAN CPARAN EQUAL ARROW PLUS OBRACKET CBRAKCET
 
 %%
 
-axiom: type comment diam comment listother
+axiom: type diam listother
 
 type: TYPE listtype SEMI
 
@@ -16,8 +16,8 @@ listtype: ID
 
 diam: DIAM EQUALS INT SEMI
 
-listother: other comment
-	   | other comment listother
+listother: other
+	   | other listother
 
 other: reaction
        | size
@@ -34,8 +34,5 @@ size: SIZE OPARAN ID CPARAN EQ INT SEMI
 speed: SPEED OPARAN ID CPARAN EQ FLOAT SEMI
 
 init: INIT OPARAN ID CPARAN EQ INT SEMI
-
-comment: # Empty
-	 | COMMENT comment
 
 %%

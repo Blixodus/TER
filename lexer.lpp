@@ -15,7 +15,7 @@ init 			{return INIT;}
 			return FLOAT;}
 [0-9]+ 			{yylval = atoi(yytext);
 			return INT;}
-\/\/.*\n 		{return COMMENT;}
+\/\/.*\n 		{} # Ignore comments
 ","			{return COMMA;}
 ";"			{return SEMI;}
 "("			{return OPARAN;}
