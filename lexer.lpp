@@ -1,0 +1,23 @@
+%{
+
+%}
+
+%%
+
+espece			{return TYPE;}
+diametre 		{return DIAM;}
+taille 			{return SIZE;}
+vitesse 		{return SPEED;}
+init 			{return INIT;}
+[A-Za-z_][A-Za-z_0-9]*	{return ID;}
+[0-9]+\.[0-9]+ 		{yylval = atoi(yytext);
+			return FLOAT;}
+[0-9]+ 			{yylval = atoi(yytext);
+			return INT;}
+\/\/.*\n 		{return COMM;}
+
+%%
+
+int main() {
+    yylex();
+}

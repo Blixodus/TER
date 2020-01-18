@@ -1,0 +1,11 @@
+%{
+
+%}
+
+%token TYPE DIAM SIZE SPEED INIT ID FLOAT INT COMM
+
+%%
+
+axiom: TYPE DIAM
+
+%%
