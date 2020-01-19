@@ -2,7 +2,7 @@
 //#include "molecule.h"
 //#include "typemolecule.h"
 //#include "reaction.h"
-#include "parser.tab.hpp"
+#include "parser.tab.hh"
 
 int main(int argc, char** argv) {
   parser.tab::yyparse();
