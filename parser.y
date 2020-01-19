@@ -1,7 +1,7 @@
 %{
   #include <iostream>
 
-  extern int yylex();
+  extern "C" int yylex();
   extern int yyparse();
   extern FILE* yyin;
 
@@ -39,7 +39,8 @@ axiom: type diam listother
 type: TYPE listtype SEMI
 
 listtype: ID { free($1); }
-	  | ID COMMA listtype { free($1); }
+	  | ID COMMA listtype { std::cout << "ID!" << $1 << std::endl;
+	       	     	      	free($1); }
 
 diam: DIAM EQUAL INT SEMI { }
 
