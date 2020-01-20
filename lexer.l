@@ -1,6 +1,6 @@
 %{
 #include <math.h>
-#include "parser.tab.h"
+#include "parser.h"
 
 extern "C" int yylex();
 %}

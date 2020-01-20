@@ -1,5 +1,6 @@
 #ifndef MOLECULE_H
 #define MOLECULE_H
+#include "typemolecule.h"
 
 class Molecule {
  private:
@@ -13,6 +14,6 @@ class Molecule {
   void move();
   void getPos(float &x, float &y, float &z);
   void react(Molecule m);
-}
+};
 
 #endif

@@ -14,6 +14,6 @@ class Reaction {
   Reaction();
   /* Return true if reaction succesful else false */
   bool react();
-}
+};
 
 #endif

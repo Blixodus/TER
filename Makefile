@@ -1,10 +1,18 @@
 LEX = flex
 YACC = bison -d
+CXX = g++
 
+main: main.cpp lexer.o parser.o
+	$(CXX) main.cpp lexer.o parser.o -o main
 
+lexer.o: lexer.c parser.o
+	$(CXX) -lfl -c lexer.c parser.o
 
-lex.yy.c: lexer.l
-	$(LEX) lexer.l
+parser.o: parser.c
+	$(CXX) -lfl -c parser.c
 
-parser.tab.c: parser.y
-	$(YACC) parser.y
+lexer.c: lexer.l
+	$(LEX) -o lexer.c lexer.l
+
+parser.c: parser.y
+	$(YACC) -o parser.c parser.y

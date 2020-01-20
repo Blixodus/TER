@@ -9,6 +9,6 @@ class TypeMolecule {
   const int size;
  public:
   TypeMolecule();
-}
+};
 
 #endif

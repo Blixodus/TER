@@ -1,5 +1,8 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
+#include "molecule.h"
+#include "typemolecule.h"
+#include "reaction.h"
 
 class Simulation {
  private:
@@ -15,6 +18,6 @@ class Simulation {
   /* Run the simulation for t ticks, default 1 tick */
   void run(int t = 1);
   
-}
+};
 
 #endif

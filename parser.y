@@ -65,10 +65,10 @@ init: INIT OPARAN ID CPARAN EQUAL INT SEMI { free($3); }
 
 %%
 
-int main(int argc, char** argv) {
-    yyin = fopen(argv[1], "r");
-    yyparse();
-}
+      //int main(int argc, char** argv) {
+      //yyin = fopen(argv[1], "r");
+      //yyparse();
+      //}
 
 void yyerror(const char* s) {
     std::cout << "Parse error" << s << std::endl;
