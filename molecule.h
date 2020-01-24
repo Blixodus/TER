@@ -9,11 +9,14 @@ class Molecule {
   const unsigned int* reacs;
   float x, y, z;
  public:
-  Molecule(TypeMolecule t, float x, float y, float z);
-  Molecule(TypeMolecule t);
-  void move();
+  Molecule(TypeMolecule, float, float, float);
+  Molecule(TypeMolecule);
+  //Diametre
+  void move(Simulation s, int d);
   void getPos(float &x, float &y, float &z);
-  void react(Molecule m);
+  // Demande à reaction si ok, si oui renvoie id sinon -1. 
+  //On utilise Reaction.react pour prendre la décision
+  int react(Molecule m);
 };
 
 #endif
