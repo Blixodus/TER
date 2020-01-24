@@ -5,10 +5,12 @@ class TypeMolecule {
  private:
   const unsigned int type_id;
   const char* name;
-  const float speed;
-  const int size;
+  float speed;
+  int size;
  public:
-  TypeMolecule();
+  TypeMolecule(unsigned int, char*);
+  void setSpeed(float);
+  void setSize(int);
 };
 
 #endif
