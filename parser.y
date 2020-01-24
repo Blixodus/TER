@@ -1,8 +1,5 @@
 %{
 #include <iostream>
-#include "typemolecule.h"
-#include "molecule.h"
-#include "reaction.h"
 #include "simulation.h"
   
 extern "C" int yylex();
@@ -46,7 +43,7 @@ axiom: 		type diam listother
 type: 		TYPE listtype SEMI
 		
 listtype: 	ID	
-	| 	ID COMMA listtype { free($1); }	
+		    | 	ID COMMA listtype { simulation.addTypeMolecule($1); free($1); }	
 		
 diam: 		DIAM EQUAL INT SEMI { }
 		
@@ -58,10 +55,10 @@ other: 		reaction
 	| 	speed	
 	| 	init	
 		
-reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI { free($1); free($4); }
+reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI { simulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5); }
 		
 morereact: // 	Empty { }
-	| 	PLUS ID { free($2); }
+	| 	PLUS ID { return $2; }
 		
 size: 		SIZE OPARAN ID CPARAN EQUAL INT SEMI { free($3); }
 		

@@ -13,16 +13,16 @@ void Simulation::setDiameter(int d) {
   diameter = d;
 }
 
-void Simulation::addReaction(Reaction r) {
-  reaction_list.push_back(r);
+void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
+  /* TODO */
 }
 
-void Simulation::addMolecule(Molecule m) {
-  molecule_list.push_back(m);
+void Simulation::addMolecule(char* name, int amount) {
+  /* TODO */
 }
 
-void Simulation::addTypeMolecule(TypeMolecule t) {
-  typemolecule_list.push_back(t);
+void Simulation::addTypeMolecule(char* name) {
+  /* TODO */
 }
 
 void Simulation::run(int t = 1) {

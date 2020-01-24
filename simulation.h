@@ -14,9 +14,9 @@ class Simulation {
  public:
   Simulation();
   void setDiameter(int);
-  void addReaction(Reaction);
-  void addMolecule(Molecule);
-  void addTypeMolecule(TypeMolecule);
+  void addReaction(char* r1, char* r2, char* p1, char* p2, float p);
+  void addMolecule(char* name, int amount);
+  void addTypeMolecule(char* name);
   /* Run the simulation for t ticks, default 1 tick */
   void run(int t = 1);
 };
