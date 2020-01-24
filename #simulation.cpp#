@@ -36,8 +36,8 @@ void Simulation::setTypeMoleculeSize(char* name, int size) {
 
 }
 
-TypeMolecule Simulation::getType(unsigned int id) {
-  
+TypeMolecule& Simulation::getType(unsigned int id) {
+  return typemolecule_list.at(id);
 }
 
 void Simulation::run(int t = 1) {
