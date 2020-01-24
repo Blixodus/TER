@@ -18,13 +18,13 @@ parser.c: parser.y
 	$(YACC) -o parser.c parser.y
 
 simulation.o: simulation.cpp molecule.o typemolecule.o reaction.o
-	$(CXX) simulation.cpp molecule.o typemolecule.o reaction.o
+	$(CXX) -c simulation.cpp molecule.o typemolecule.o reaction.o
 
 molecule.o: molecule.cpp typemolecule.o
-	$(CXX) molecule.cpp typemolecule.o
+	$(CXX) -c molecule.cpp typemolecule.o
 
 typemolecule.o: typemolecule.cpp
-	$(CXX) typemolecule.cpp
+	$(CXX) -c typemolecule.cpp
 
 reaction.o: reaction.cpp
-	$(CXX) reaction.cpp
+	$(CXX) -c reaction.cpp

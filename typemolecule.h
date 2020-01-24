@@ -7,8 +7,9 @@ class TypeMolecule {
   const char* name;
   float speed;
   int size;
+
  public:
-  TypeMolecule(unsigned int, char*);
+  TypeMolecule(const unsigned int, const char*);
   void setSpeed(float);
   void setSize(int);
 };
