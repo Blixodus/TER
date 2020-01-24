@@ -6,12 +6,12 @@
 
 class Simulation {
  private:
-  const int diameter;
+  int diameter;
   TypeMolecule* types;
   Reaction* reacs;
   Molecule** moles;
  public:
-  Simulation(int d);
+  Simulation();
   void addReaction(Reaction r);
   void addMolecule(Molecule m);
   void addTypeMolecule(TypeMolecule t);

@@ -16,3 +16,4 @@ lexer.c: lexer.l
 
 parser.c: parser.y
 	$(YACC) -o parser.c parser.y
+

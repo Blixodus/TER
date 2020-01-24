@@ -4,7 +4,7 @@
 
 extern "C" int yylex();
 %}
-
+						
 %%
 
 espece			{ return TYPE; }
