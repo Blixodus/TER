@@ -35,6 +35,8 @@ void yyerror(const char* s);
 %token			PLUS		
 %token			OBRACKET		
 %token			CBRACKET		
+
+%type	<sval>		morereact
 			
 %%
 
@@ -57,8 +59,8 @@ other: 		reaction
 		
 reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI { simulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5); }
 		
-morereact: /* Empty */ { return ""; }
-	| 	PLUS ID { return $2; }
+morereact: /* Empty */ { $$ = ""; }
+	| 	PLUS ID { $$ = $2; }
 		
 size: 		SIZE OPARAN ID CPARAN EQUAL INT SEMI { simulation.setTypeMoleculeSize($3, $6); free($3); }
 		

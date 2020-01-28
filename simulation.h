@@ -20,6 +20,7 @@ class Simulation {
   void setTypeMoleculeSpeed(char* name, float speed);
   void setTypeMoleculeSize(char* name, int size);
   TypeMolecule& getType(unsigned int id);
+  Reaction& getReaction(unsigned int id);
   /* Run the simulation for t ticks, default 1 tick */
   void run(int t = 1);
 };
