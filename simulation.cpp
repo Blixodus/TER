@@ -28,16 +28,24 @@ void Simulation::addTypeMolecule(char* name) {
 
 void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
   for(int i = 0; i < typemolecule_list.size(); i++) {
-    
+    TypeMolecule t = typemolecule_list.at(i);
+    if(strcmp(t.getName(), name) == 0) {
+      t.setSpeed(speed);
+      break;
+    }
   }
 }
 
 void Simulation::setTypeMoleculeSize(char* name, int size) {
-
+  
 }
 
-TypeMolecule Simulation::getType(unsigned int id) {
-  
+TypeMolecule& Simulation::getType(unsigned int id) {
+  return typemolecule_list.at(id);
+}
+
+Reaction& Simulation::getReaction(unsigned int id) {
+  return reaction_list.at(id);
 }
 
 void Simulation::run(int t = 1) {
