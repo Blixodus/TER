@@ -11,7 +11,8 @@ class Reaction {
   const unsigned int p2;
   const float prob;
  public:
-  Reaction();
+  Reaction(const unsigned int, const unsigned int, const unsigned int,
+          const unsigned int, const unsigned int, const float);
   /* Return true if reaction succesful else false */
   bool react();
 };

@@ -36,3 +36,7 @@ void Molecule::getPos(float &x, float &y, float &z){
     y = y;
     z = z;
 }
+
+void Molecule::react(Molecule m){
+    /* TODO */
+}
