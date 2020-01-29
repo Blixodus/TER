@@ -5,8 +5,7 @@
 #include <vector>
 
 
-Simulation::Simulation() {
-  
+Simulation::Simulation():typemolecule_list(), reaction_list(), molecule_list(){
 }
 
 void Simulation::setDiameter(int d) {

@@ -8,9 +8,9 @@
 class Simulation {
  private:
   int diameter;
-  vector<TypeMolecule> typemolecule_list;
-  vector<Reaction> reaction_list;
-  vector<vector<Molecule>> molecule_list;
+  std::vector<TypeMolecule> typemolecule_list;
+  std::vector<Reaction> reaction_list;
+  std::vector<std::vector<Molecule>> molecule_list;
  public:
   Simulation();
   void setDiameter(int);
