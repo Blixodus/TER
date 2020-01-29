@@ -1,13 +1,15 @@
 #include "molecule.h"
-#include "typemolecule.h"
-#include "simulation.h"
 #include <cmath>
 #include <time.h>
 #include <vector>
 
-Molecule::Molecule(TypeMolecule t, float xx, float yy, float zz) : x(xx), y(yy), z(zz), type(t.getId()) {}
+Molecule::Molecule(TypeMolecule t, float xx, float yy, float zz) : x(xx), y(yy), z(zz), type(t.getId()) {
+  flag_used = false;
+}
 
-Molecule::Molecule(TypeMolecule t) : type(t.getId()) {}
+Molecule::Molecule(TypeMolecule t) : type(t.getId()) {
+  flag_used = false;
+}
 
 void Molecule::move(Simulation* s, int d, float& x_arg, float& y_arg, float& z_arg){
     
@@ -26,8 +28,7 @@ void Molecule::move(Simulation* s, int d, float& x_arg, float& y_arg, float& z_a
         x_arg = x;
         y_arg = y;
         z_arg = z;
-    } 
-    else {
+    } else {
         x_arg = new_x;
         y_arg = new_y;
         z_arg = new_z;
@@ -40,6 +41,8 @@ void Molecule::getPos(float &x, float &y, float &z){
     z = this->z;
 }
 
-int Molecule::react(Molecule m){
-    /* TODO */
+int Molecule::setPos(float x, float y, float z){
+  this->x = x;
+  this->y = y;
+  this->z = z;
 }

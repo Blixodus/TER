@@ -8,6 +8,8 @@ class Molecule {
   bool flag_used;
  public:
   const unsigned int type;
+  const unsigned int size;
+  const float speed;
   Molecule(unsigned int, float, float, float);
   Molecule(unsigned int);
   ~Molecule();
