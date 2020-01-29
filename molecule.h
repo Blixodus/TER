@@ -1,13 +1,12 @@
 #ifndef MOLECULE_H
 #define MOLECULE_H
 #include "typemolecule.h"
-#include "simulation.h"
+#include "reaction.h"
 
 class Molecule {
  private:
-  /* Molecule type represented by unsigned int to save space and avoid memory leaks */
-  const unsigned int type;
-  const unsigned int* reacs;
+  const TypeMolecule type;
+  vector<Reaction> reacs;
   float x, y, z;
  public:
   Molecule(TypeMolecule, float, float, float);
