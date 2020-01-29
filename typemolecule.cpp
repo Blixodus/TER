@@ -14,21 +14,21 @@ void TypeMolecule::setSize(int s) {
     size = s;
 }
 
-unsigned int TypeMolecule::get_id() const {
+unsigned int TypeMolecule::getId() const {
   return type_id;
 }
 
-char* TypeMolecule::get_name() const {
+char* TypeMolecule::getName() const {
   char* n;
   strcpy(n, name);
   return n;
 }
 
-float TypeMolecule::get_speed() const {
+float TypeMolecule::getSpeed() const {
   return speed;
 }
 
-int TypeMolecule::get_size() const {
+int TypeMolecule::getSize() const {
   return size;
 	      
 }

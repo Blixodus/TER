@@ -12,10 +12,10 @@ class TypeMolecule {
   TypeMolecule(const unsigned int, const char*);
   void setSpeed(float);
   void setSize(int);
-  unsigned int get_id() const;
-  char* get_name() const;
-  float get_speed() const;
-  int get_size() const;
+  unsigned int getId() const;
+  char* getName() const;
+  float getSpeed() const;
+  int getSize() const;
 };
 
 #endif

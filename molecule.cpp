@@ -3,19 +3,20 @@
 #include "simulation.h"
 #include <cmath>
 #include <time.h>
+#include <vector>
 
-Molecule::Molecule(TypeMolecule t, float xx, float yy, float zz) : x(xx), y(yy), z(zz), type(t.get_id()) {}
+Molecule::Molecule(TypeMolecule t, float xx, float yy, float zz) : x(xx), y(yy), z(zz), type(t.getId()) {}
 
-Molecule::Molecule(TypeMolecule t) : type(t.get_id) {}
+Molecule::Molecule(TypeMolecule t) : type(t.getId()) {}
 
 void Molecule::move(Simulation* s, int d, float& x_arg, float& y_arg, float& z_arg){
     
     srand(time(NULL));
-    float pi = 3.14159f
+    float pi = 3.14159f;
     float r = s->getType(type).getSpeed();
     int size = s->getType(type).getSize();
-    float theta = rand()/(float)RAND_MAX)*pi;
-    float phi =  rand()/(float)RAND_MAX)*2*pi;
+    float theta = rand()/(float)RAND_MAX*pi;
+    float phi =  rand()/(float)RAND_MAX*2*pi;
 
     float new_x = x + r*cos(phi)*cos(theta);
     float new_y = y + r*cos(phi)*sin(theta);
@@ -39,6 +40,6 @@ void Molecule::getPos(float &x, float &y, float &z){
     z = this->z;
 }
 
-void Molecule::react(Molecule m){
+int Molecule::react(Molecule m){
     /* TODO */
 }
