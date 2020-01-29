@@ -3,17 +3,16 @@
 
 class TypeMolecule {
  private:
-  const unsigned int type_id;
-  const char* name;
   float speed;
   int size;
-
  public:
-  TypeMolecule(const unsigned int, const char*);
+  const unsigned int type_id;
+  const char* name;
+  TypeMolecule(unsigned int, const char*);
+  /* Set molecule type parameters */
   void setSpeed(float);
   void setSize(int);
-  unsigned int getId() const;
-  char* getName() const;
+  /* Get molecule type parameters */
   float getSpeed() const;
   int getSize() const;
 };

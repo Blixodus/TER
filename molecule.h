@@ -1,22 +1,22 @@
 #ifndef MOLECULE_H
 #define MOLECULE_H
-#include "typemolecule.h"
-#include "reaction.h"
 
 class Molecule {
  private:
-  const TypeMolecule type;
-  vector<Reaction> reacs;
   float x, y, z;
+  /* Whether or not the molecule has already reacted or moved */
+  bool flag_used;
  public:
-  Molecule(TypeMolecule, float, float, float);
-  Molecule(TypeMolecule);
-  //Diametre
-  void move(Simulation* s, int d, float &x_arg, float &y_arg, float &z_arg);
+  const unsigned int type;
+  Molecule(unsigned int, float, float, float);
+  Molecule(unsigned int);
+  ~Molecule();
+  /* Get position onto which the molecule would move */
+  void getMove(int d, float &x_arg, float &y_arg, float &z_arg);
+  /* Get current position */
   void getPos(float &x, float &y, float &z);
-  // Demande à reaction si ok, si oui renvoie id sinon -1. 
-  //On utilise Reaction.react pour prendre la décision
-  int react(Molecule m);
+  /* Set position */
+  void setPos(float, float, float);
 };
 
 #endif

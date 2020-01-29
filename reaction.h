@@ -5,14 +5,13 @@ class Reaction {
  private:
   /* r1 + r2 -> p1 + p2 [prob] */
   const unsigned int react_id;
+  const float prob;
+ public:
   const unsigned int r1; 
   const unsigned int r2;
   const unsigned int p1;
   const unsigned int p2;
-  const float prob;
- public:
-  Reaction(const unsigned int, const unsigned int, const unsigned int,
-          const unsigned int, const unsigned int, const float);
+  Reaction(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float);
   /* Return true if reaction succesful else false */
   bool react();
 };
