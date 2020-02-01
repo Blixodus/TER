@@ -1,5 +1,6 @@
 #ifndef MOLECULE_H
 #define MOLECULE_H
+#include "typemolecule.h"
 
 class Molecule {
  private:
@@ -7,18 +8,22 @@ class Molecule {
   /* Whether or not the molecule has already reacted or moved */
   bool flag_used;
  public:
-  const unsigned int type;
-  const unsigned int size;
-  const float speed;
-  Molecule(unsigned int, float, float, float);
-  Molecule(unsigned int);
+  const TypeMolecule type;
+  Molecule(TypeMolecule&, float, float, float);
+  Molecule(TypeMolecule&);
   ~Molecule();
   /* Get position onto which the molecule would move */
-  void getMove(int d, float &x_arg, float &y_arg, float &z_arg);
+  void getMove(float&, float&, float&);
   /* Get current position */
-  void getPos(float &x, float &y, float &z);
+  void getPos(float&, float&, float&);
   /* Set position */
   void setPos(float, float, float);
+  /* Mark used */
+  void setUsed();
+  /* Mark unused */
+  void setUnused();
+  /* Get used/unused state */
+  bool getState();
 };
 
 #endif

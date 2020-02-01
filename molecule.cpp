@@ -3,46 +3,56 @@
 #include <time.h>
 #include <vector>
 
-Molecule::Molecule(TypeMolecule t, float xx, float yy, float zz) : x(xx), y(yy), z(zz), type(t.getId()) {
+Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t) {
+  type = t;
   flag_used = false;
-}
-
-Molecule::Molecule(TypeMolecule t) : type(t.getId()) {
-  flag_used = false;
-}
-
-void Molecule::move(Simulation* s, int d, float& x_arg, float& y_arg, float& z_arg){
-    
-    srand(time(NULL));
-    float pi = 3.14159f;
-    float r = s->getType(type).getSpeed();
-    int size = s->getType(type).getSize();
-    float theta = rand()/(float)RAND_MAX*pi;
-    float phi =  rand()/(float)RAND_MAX*2*pi;
-
-    float new_x = x + r*cos(phi)*cos(theta);
-    float new_y = y + r*cos(phi)*sin(theta);
-    float new_z = z + r*sin(phi); 
-
-    if(new_x*new_x + new_y*new_y + new_z*new_z > (d - size)*(d - size)) {
-        x_arg = x;
-        y_arg = y;
-        z_arg = z;
-    } else {
-        x_arg = new_x;
-        y_arg = new_y;
-        z_arg = new_z;
-    }
-}
-
-void Molecule::getPos(float &x, float &y, float &z){
-    x = this->x;
-    y = this->y;
-    z = this->z;
-}
-
-int Molecule::setPos(float x, float y, float z){
   this->x = x;
   this->y = y;
   this->z = z;
+}
+
+Molecule::Molecule(TypeMolecule& t) : {
+  type = t;
+  flag_used = false;
+  /* TODO : Set random x, y, z within boundaries or remove constructor? */
+}
+
+void Molecule::getMove(float& x_arg, float& y_arg, float& z_arg){
+  srand(time(NULL));
+  float pi = 3.14159f;
+  float r = type.getSpeed();
+  float theta = pi*(float)rand()/(float)RAND_MAX;
+  float phi =  2*pi*(float)rand()/(float)RAND_MAX;
+  
+  float new_x = x + r*cos(phi)*cos(theta);
+  float new_y = y + r*cos(phi)*sin(theta);
+  float new_z = z + r*sin(phi); 
+
+  x_arg = x_new;
+  y_arg = y_new;
+  z_arg = z_new;
+}
+
+void Molecule::getPos(float &x, float &y, float &z){
+  x = this->x;
+  y = this->y;
+  z = this->z;
+}
+
+void Molecule::setPos(float x, float y, float z){
+  this->x = x;
+  this->y = y;
+  this->z = z;
+}
+
+void Molecule::setUsed() {
+  this->flag_used = true;
+}
+
+void Molecule::setUnused() {
+  this->flag_used = false;
+}
+
+bool Molecule::getState() {
+  return this->flag_used;
 }
