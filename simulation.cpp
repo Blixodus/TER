@@ -14,12 +14,29 @@ bool Simulation::checkBounds(float x, float y, float z, int t) {
   return (x*x + y*y + z*z + r) <= diameter*diameter;
 }
 
-void Simulation::reactOne(int r1) {
-
+void Simulation::reactOne(int m) {
+  Molecule mole = molecule_list.at(m);
+  float x, y, z;
+  mole.getPos(&x, &y, &z);
+  t = mole.type;
+  int p1, p2;
+  for(Reaction r : reaction_list) {
+    if(r.r1 == t && r.r2 == -1) {
+      r.react(&p1, &p2);
+      if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x, y, z));
+      if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x, y, z));
+      if(p1 != -1 && p2 != -1) molecule_list.erase(molecule_list.begin() + m);
+    }
+  }
+  delete(mole);
 }
 
-void Simulation::reactTwo(int r1, int r2) {
+void Simulation::reactTwo(int m1, int m2) {
+  /* TODO */
+}
 
+int Simulation::computeTrajectory(int m) {
+  /* TODO */
 }
 
 void Simulation::setDiameter(int d) {
@@ -31,6 +48,7 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   tr2 = findTypeID(r2);
   tp1 = findTypeID(p1);
   tp2 = findTypeID(p2);
+  /* TODO */
   /* Check if reaction exists with same r1 and r2 */
   /* Otherwise create new reaction */
 }
