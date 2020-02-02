@@ -11,12 +11,6 @@ Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t) {
   this->z = z;
 }
 
-Molecule::Molecule(TypeMolecule& t) : {
-  type = t;
-  flag_used = false;
-  /* TODO : Set random x, y, z within boundaries or remove constructor? */
-}
-
 void Molecule::getMove(float& x_arg, float& y_arg, float& z_arg){
   srand(time(NULL));
   float pi = 3.14159f;
