@@ -1,20 +1,29 @@
 #ifndef REACTION_H
 #define REACTION_H
+#include <iostream>
+#include <vector>
+#include <tuple>
+#include <cstdlib>
+#include <ctime>
 
 class Reaction {
  private:
- public:
-  /* r1 + r2 -> p1 + p2 [prob] */
+  /* r1 + r2 -> products [prob] */
   const unsigned int react_id;
-  const float prob;
-  /* r1, r2, p1, p2 are type_id, r2 and p2 can be -1 if none */
-  const unsigned int r1; 
-  const unsigned int r2;
-  const unsigned int p1;
-  const unsigned int p2;
-  Reaction(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, float);
-  /* Return true if reaction succesful else false */
-  bool react() const;
+  float prob_sum;
+  std::vector<float> prob;
+  std::vector<std::tuple<int, int>> product_id;
+ public:
+  /* r1, r2, -1 if none */
+  const int r1; 
+  const int r2;
+  Reaction(int, int, unsigned int);
+  Reaction(int, unsigned int);
+  /* Add new products with a certain probability */
+  void add(int, int, float);
+  void add(int, float);
+  /* Set product id into p1 and p2 */
+  void react(int&, int&) const;
 };
 
 #endif

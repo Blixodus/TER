@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "simulation.h"
 #include "molecule.h"
 #include "typemolecule.h"
@@ -10,7 +11,7 @@ Simulation simulation;
 void initSim(void) {
   if(yyparse()) {
     std::cout << "Parser error, aborting!" << std::endl;
-    exit(0);
+    std::exit(0);
   }
 }
 
