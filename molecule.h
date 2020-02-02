@@ -10,8 +10,6 @@ class Molecule {
  public:
   const TypeMolecule type;
   Molecule(TypeMolecule&, float, float, float);
-  Molecule(TypeMolecule&);
-  ~Molecule();
   /* Get position onto which the molecule would move */
   void getMove(float&, float&, float&);
   /* Get current position */
