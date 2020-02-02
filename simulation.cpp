@@ -17,26 +17,52 @@ bool Simulation::checkBounds(float x, float y, float z, int t) {
 void Simulation::reactOne(int m) {
   Molecule mole = molecule_list.at(m);
   float x, y, z;
-  mole.getPos(&x, &y, &z);
-  t = mole.type;
+  mole.getPos(x, y, z);
+  int t = mole.type;
   int p1, p2;
   for(Reaction r : reaction_list) {
     if(r.r1 == t && r.r2 == -1) {
-      r.react(&p1, &p2);
+      r.react(p1, p2);
       if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x, y, z));
       if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x, y, z));
       if(p1 != -1 && p2 != -1) molecule_list.erase(molecule_list.begin() + m);
+      break;
     }
   }
   delete(mole);
 }
 
 void Simulation::reactTwo(int m1, int m2) {
-  /* TODO */
+  Molecule mole1 = molecule_list.at(m1);
+  Molecule mole2 = molecule_list.at(m2);
+  float x1, y1, z1;
+  float x2, y2, z2;
+  mole1.getPos(x1, y1, z1);
+  mole2.getPos(x2, y2, z2);
+  int t1 = mole1.type;
+  int t2 = mole2.type;
+  int p1, p2;
+  for(Reaction r : reaction_list) {
+    if(r.r1 == t1 && r.r2 == t2) {
+      r.react(p1, p2);
+      if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x, y, z));
+      if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x, y, z));
+      if(p1 != -1 && p2 != -1) molecule_list.erase(molecule_list.begin() + m);
+      break;
+    }
+  }
+  delete(mole1);
+  delete(mole2);
 }
 
 int Simulation::computeTrajectory(int m) {
+  Molecule mole = molecule_list.at(m);
+  float x, y, z, x_new, y_new, z_new;
+  mole.getPos(x, y, z);
+  mole.getMove(x_new, y_new, z_new);
   /* TODO */
+  /* Calculate movement vector */
+  /* Calculate nearest molecule on trajectory */
 }
 
 void Simulation::setDiameter(int d) {
