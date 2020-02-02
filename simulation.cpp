@@ -1,11 +1,25 @@
 #include "simulation.h"
-#include "molecule.h"
-#include "typemolecule.h"
-#include "reaction.h"
-#include <vector>
-
 
 Simulation::Simulation():typemolecule_list(), reaction_list(), molecule_list(){
+}
+
+int Simulation::findTypeID(char* name) {
+  for(TypeMolecule t : typemolecule_list) {
+    if(!std::strcmp(name, t.name)) return t.type_id;
+  }
+}
+
+bool Simulation::checkBounds(float x, float y, float z, int t) {
+  int r = t.getSize();
+  return (x*x + y*y + z*z + r) <= diameter*diameter;
+}
+
+void Simulation::reactOne(int r1) {
+
+}
+
+void Simulation::reactTwo(int r1, int r2) {
+
 }
 
 void Simulation::setDiameter(int d) {
@@ -13,11 +27,21 @@ void Simulation::setDiameter(int d) {
 }
 
 void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
-  /* TODO */
+  tr1 = findTypeID(r1);
+  tr2 = findTypeID(r2);
+  tp1 = findTypeID(p1);
+  tp2 = findTypeID(p2);
+  /* Check if reaction exists with same r1 and r2 */
+  /* Otherwise create new reaction */
 }
 
 void Simulation::addMolecule(char* name, int amount) {
-  /* TODO */
+  t = findTypeID(name);
+  x = 0.0;
+  y = 0.0;
+  z = 0.0;
+  Molecule m = new Molecule(&typemolecule_list.at(t), x, y, z);
+  molecule_list.push_back(m);
 }
 
 void Simulation::addTypeMolecule(char* name) {
@@ -26,25 +50,13 @@ void Simulation::addTypeMolecule(char* name) {
 }
 
 void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
-  for(int i = 0; i < typemolecule_list.size(); i++) {
-    TypeMolecule t = typemolecule_list.at(i);
-    if(strcmp(t.getName(), name) == 0) {
-      t.setSpeed(speed);
-      break;
-    }
-  }
+  int t = findTypeID(name);
+  t.setSpeed(speed);
 }
 
 void Simulation::setTypeMoleculeSize(char* name, int size) {
-  
-}
-
-TypeMolecule& Simulation::getType(unsigned int id) {
-  return typemolecule_list.at(id);
-}
-
-Reaction& Simulation::getReaction(unsigned int id) {
-  return reaction_list.at(id);
+  int t = findTypeID(name);
+  t.setSize(size);
 }
 
 void Simulation::run(int t = 1) {

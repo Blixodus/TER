@@ -11,25 +11,27 @@ class Simulation {
   std::vector<TypeMolecule> typemolecule_list;
   std::vector<Reaction> reaction_list;
   std::vector<Molecule> molecule_list;
+  /* Find id */
+  int findTypeID(char*);
+  /* Check that a point is within boundaries */
+  bool checkBounds(float, float, float, int) const;
+  /* Try to react one molecule */
+  void reactOne(int);
+  /* Try to react two molecules */
+  void reactTwo(int, int);
+  /* Calculates the molecule in trajectory if any, parameter position in list, return position in list or -1 if none */
+  int computeTrajectory(int) const;
  public:
   Simulation();
   /* Set simulation diameter (used by parser) */
   void setDiameter(int);
   /* Add reaction/molecule/type of molecule to simulation (used by parser) */
-  void addReaction(char* r1, char* r2, char* p1, char* p2, float p);
-  void addMolecule(char* name, int amount);
-  void addTypeMolecule(char* name);
+  void addReaction(char*, char*, char*, char*, float);
+  void addMolecule(char*, int);
+  void addTypeMolecule(char*);
   /* Set molecule type parameters (used by parser) */
-  void setTypeMoleculeSpeed(char* name, float speed);
-  void setTypeMoleculeSize(char* name, int size);
-  /* Check that a point is within boundaries */
-  bool checkBounds(float, float, float) const;
-  /* Try all reactions for one molecule in molecule_list, parameter position in list, return reaction id or -1 if unsuccessful */
-  int reactOne(int) const;
-  /* Try all reactions between two molecules in molecule_list, parameters positions in list, return reaction id or -1 if unsuccessful */
-  int reactTwo(int, int) const;
-  /* Calculates the molecule in trajectory if any, parameter position in list, return position in list or -1 if none */
-  int computeTrajectory(int) const;
+  void setTypeMoleculeSpeed(char*, float);
+  void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks, default 1 tick */
   void run(int t = 1);
 };
