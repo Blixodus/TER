@@ -46,6 +46,8 @@ void Molecule::getPos(float &x, float &y, float &z){
 }
 
 void Molecule::move(){
+  float a, b, c;
+  getMove(a, b, c);
   this->x = this->x_new;
   this->y = this->y_new;
   this->z = this->z_new;
