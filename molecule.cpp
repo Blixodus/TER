@@ -14,7 +14,7 @@ Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t) {
   this->z_new = z;
 }
 
-void Molecule::getMove(float& x_arg, float& y_arg, float& z_arg){
+void Molecule::getMove(float& x_arg, float& y_arg, float& z_arg) {
   if(flag_move) {
     x_arg = x_new;
     y_arg = y_new;
@@ -39,19 +39,23 @@ void Molecule::getMove(float& x_arg, float& y_arg, float& z_arg){
   flag_move = true
 }
 
-void Molecule::getPos(float &x, float &y, float &z){
+void Molecule::getPos(float &x, float &y, float &z) {
   x = this->x;
   y = this->y;
   z = this->z;
 }
 
-void Molecule::move(){
+void Molecule::move() {
   float a, b, c;
   getMove(a, b, c);
   this->x = this->x_new;
   this->y = this->y_new;
   this->z = this->z_new;
   flag_move = false;
+}
+
+void Molecule::noMove() {
+  flag_move = true;
 }
 
 void Molecule::setUsed() {
