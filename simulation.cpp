@@ -25,7 +25,7 @@ void Simulation::reactOne(int m) {
       r.react(p1, p2);
       if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x, y, z));
       if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x, y, z));
-      if(p1 != -1 && p2 != -1) molecule_list.erase(molecule_list.begin() + m);
+      if(p1 != -1 || p2 != -1) molecule_list.erase(molecule_list.begin() + m);
       break;
     }
   }
@@ -47,7 +47,10 @@ void Simulation::reactTwo(int m1, int m2) {
       r.react(p1, p2);
       if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x, y, z));
       if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x, y, z));
-      if(p1 != -1 && p2 != -1) molecule_list.erase(molecule_list.begin() + m);
+      if(p1 != -1 || p2 != -1) {
+	molecule_list.erase(molecule_list.begin() + m1);
+	molecule_list.erase(molecule_list.begin() + m2);
+      }
       break;
     }
   }
