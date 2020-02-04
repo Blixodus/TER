@@ -1,11 +1,12 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 #include <vector>
+#include "abstractsimulation.h"
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
 
-class Simulation {
+class Simulation : public AbstractSimulation {
  private:
   int diameter;
   std::vector<TypeMolecule> typemolecule_list;
@@ -16,9 +17,9 @@ class Simulation {
   /* Check that a point is within boundaries */
   bool checkBounds(float, float, float, int) const;
   /* Try to react one molecule */
-  void reactOne(int);
+  bool reactOne(int);
   /* Try to react two molecules */
-  void reactTwo(int, int);
+  bool reactTwo(int, int);
   /* Calculates the molecule in trajectory if any, parameter position in list, return position in list or -1 if none */
   int computeTrajectory(int) const;
  public:
@@ -33,7 +34,7 @@ class Simulation {
   void setTypeMoleculeSpeed(char*, float);
   void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks, default 1 tick */
-  void run(int t = 1);
+  void run(int t = 1) override;
 };
 
 #endif

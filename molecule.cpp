@@ -69,3 +69,7 @@ void Molecule::setUnused() {
 bool Molecule::getState() {
   return this->flag_used;
 }
+
+void Molecule::outOfBounds() {
+  this->flag_move == false;
+}

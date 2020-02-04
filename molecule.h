@@ -17,14 +17,17 @@ class Molecule {
   void getMove(float&, float&, float&);
   /* Get current position */
   void getPos(float&, float&, float&);
-  /* Move to calculated position */
+  /* Move to calculated position or do not move */
   void move();
+  void noMove();
   /* Mark used */
   void setUsed();
   /* Mark unused */
   void setUnused();
   /* Get used/unused state */
   bool getState();
+  /* Reset move in case of unlawful move */
+  void outOfBounds();
 };
 
 #endif

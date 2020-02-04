@@ -14,7 +14,8 @@ bool Simulation::checkBounds(float x, float y, float z, int t) {
   return (x*x + y*y + z*z + r) <= diameter*diameter;
 }
 
-void Simulation::reactOne(int m) {
+bool Simulation::reactOne(int m) {
+  bool flag_reacted = false;
   Molecule mole = molecule_list.at(m);
   float x, y, z;
   mole.getPos(x, y, z);
@@ -23,16 +24,29 @@ void Simulation::reactOne(int m) {
   for(Reaction r : reaction_list) {
     if(r.r1 == t && r.r2 == -1) {
       r.react(p1, p2);
-      if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x, y, z));
-      if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x, y, z));
-      if(p1 != -1 || p2 != -1) molecule_list.erase(molecule_list.begin() + m);
+      if(p1 != -1) {
+	Molecule m = new Molecule(&typemolecule_list.at(p1), x, y, z);
+	m.setUsed();
+	molecule_list.push_back(m);
+      }
+      if(p2 != -1) {
+	Molecule m = new Molecule(&typemolecule_list.at(p2), x, y, z);
+	m.setUsed();
+	molecule_list.push_back(m);
+      }
+      if(p1 != -1 || p2 != -1) {
+	molecule_list.erase(molecule_list.begin() + m);
+	flag_reacted = true;
+      }
       break;
     }
   }
   delete(mole);
+  return flag_reacted;
 }
 
-void Simulation::reactTwo(int m1, int m2) {
+bool Simulation::reactTwo(int m1, int m2) {
+  bool flag_reacted = false;
   Molecule mole1 = molecule_list.at(m1);
   Molecule mole2 = molecule_list.at(m2);
   float x1, y1, z1;
@@ -45,17 +59,27 @@ void Simulation::reactTwo(int m1, int m2) {
   for(Reaction r : reaction_list) {
     if(r.r1 == t1 && r.r2 == t2) {
       r.react(p1, p2);
-      if(p1 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p1), x1, y1, z1));
-      if(p2 != -1) molecule_list.push_back(new Molecule(&typemolecule_list.at(p2), x2, y2, z2));
+      if(p1 != -1) {
+	Molecule m = new Molecule(&typemolecule_list.at(p1), x1, y1, z1);
+	m.setUsed();
+	molecule_list.push_back(m);
+      }
+      if(p2 != -1) {
+	Molecule m = new Molecule(&typemolecule_list.at(p2), x2, y2, z2);
+	m.setUsed();
+	molecule_list.push_back(m);
+      }
       if(p1 != -1 || p2 != -1) {
 	molecule_list.erase(molecule_list.begin() + m1);
 	molecule_list.erase(molecule_list.begin() + m2);
+	flag_reacted = true;
       }
       break;
     }
   }
   delete(mole1);
   delete(mole2);
+  return flag_reacted;
 }
 
 int Simulation::computeTrajectory(int m) {
@@ -108,7 +132,30 @@ void Simulation::setTypeMoleculeSize(char* name, int size) {
 
 void Simulation::run(int t = 1) {
   /* TODO */
-  /* Calculate molecule intersections */
-  /* Compute reactions */
-  /* Move all molecules */
+  for(int i = 0; i < t; i++) {
+    for(int m = 0; m < molecule_list.size(); m++) {
+      /* Find nearest molecule in trajectory */
+      int collision = computeTrajectory(m);
+      bool collides = (collision != -1);
+      bool reacted;
+      /* In case of collision try to react */
+      if(collides) reacted = reactTwo(m, collision);
+      /* In case of no collision or no reaction try to react alone */
+      if(!collides || !reacted) reacted = reactOne(m);
+      /* In case of no collision and no reaction move */
+      if(collides && !reacted) {
+	molecule_list.at(m).setUsed();
+	molecule_list.at(m).noMove();
+      }
+      /* In case of no collision and no reaction move */
+      if(!collides && !reacted) {
+	molecule_list.at(m).setUsed();
+	molecule_list.at(m).move();
+      }
+    }
+    /* Reset all molecules */
+    for(Molecule m : molecule_list) {
+      m.setUnused();
+    }
+  }
 }
