@@ -16,7 +16,7 @@ class Simulation : public AbstractSimulation {
   /* Find id */
   int findTypeID(char*);
   /* Check that a point is within boundaries */
-  bool checkBounds(float, float, float, int) const;
+  bool checkBounds(Vec3&, int) const;
   /* Try to react one molecule */
   bool reactOne(int);
   /* Try to react two molecules */

@@ -17,20 +17,19 @@ bool Simulation::checkBounds(Vec3& v, int t) {
 bool Simulation::reactOne(int m) {
   bool flag_reacted = false;
   Molecule mole = molecule_list.at(m);
-  float x, y, z;
-  mole.getPos(x, y, z);
+  Vec3 pos = mole.getPos();
   int t = mole.type;
   int p1, p2;
   for(Reaction r : reaction_list) {
     if(r.r1 == t && r.r2 == -1) {
       r.react(p1, p2);
       if(p1 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p1), x, y, z);
+	Molecule m = new Molecule(&typemolecule_list.at(p1), pos);
 	m.setUsed();
 	molecule_list.push_back(m);
       }
       if(p2 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p2), x, y, z);
+	Molecule m = new Molecule(&typemolecule_list.at(p2), pos);
 	m.setUsed();
 	molecule_list.push_back(m);
       }
@@ -41,6 +40,7 @@ bool Simulation::reactOne(int m) {
       break;
     }
   }
+  delete(pos);
   delete(mole);
   return flag_reacted;
 }
@@ -49,10 +49,8 @@ bool Simulation::reactTwo(int m1, int m2) {
   bool flag_reacted = false;
   Molecule mole1 = molecule_list.at(m1);
   Molecule mole2 = molecule_list.at(m2);
-  float x1, y1, z1;
-  float x2, y2, z2;
-  mole1.getPos(x1, y1, z1);
-  mole2.getPos(x2, y2, z2);
+  Vec3 pos1 = mole1.getPos();
+  Vec3 pos2 = mole2.getPos();
   int t1 = mole1.type;
   int t2 = mole2.type;
   int p1, p2;
@@ -60,12 +58,12 @@ bool Simulation::reactTwo(int m1, int m2) {
     if(r.r1 == t1 && r.r2 == t2) {
       r.react(p1, p2);
       if(p1 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p1), x1, y1, z1);
+	Molecule m = new Molecule(&typemolecule_list.at(p1), pos1);
 	m.setUsed();
 	molecule_list.push_back(m);
       }
       if(p2 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p2), x2, y2, z2);
+	Molecule m = new Molecule(&typemolecule_list.at(p2), pos2);
 	m.setUsed();
 	molecule_list.push_back(m);
       }
@@ -77,6 +75,8 @@ bool Simulation::reactTwo(int m1, int m2) {
       break;
     }
   }
+  delete(pos1);
+  delete(pos2);
   delete(mole1);
   delete(mole2);
   return flag_reacted;
@@ -84,21 +84,17 @@ bool Simulation::reactTwo(int m1, int m2) {
 
 int Simulation::computeTrajectory(int m) {
   Molecule mole = molecule_list.at(m);
-  float x, y, z, x_new, y_new, z_new;
-  mole.getPos(x, y, z);
-  mole.getMove(x_new, y_new, z_new);
-  /* Calculate movement vector */
-  float x_dir = x_new - x;
-  float y_dir = y_new - y;
-  float z_dir = z_new - z;
-  /* Calculate nearest molecule on trajectory */
+  Vec3 pos = mole.getPos();
+  Vec3 dir = mole.getMove();
+  /* TODO Calculate nearest molecule on trajectory */
   bool flag_nearest = false;
   Molecule nearest;
   float dist_nearest = FLT_MAX;
-  float x2, y2, z2;
+  Vec3 pos2;
   for(Molecule m : molecule_list) {
-    m.getPos(x2, y2, z2);
-    
+    delete(pos2);
+    pos2 = m.getPos();
+    Vec3 proj = 
   }
 }
 
