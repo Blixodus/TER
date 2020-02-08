@@ -1,60 +1,57 @@
 #include "molecule.h"
-#include <cmath>
-#include <time.h>
-#include <vector>
 
 Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t) {
-  type = t;
   flag_used = false;
-  this->x = x;
-  this->y = y;
-  this->z = z;
-  this->x_new = x;
-  this->y_new = y;
-  this->z_new = z;
+  flag_move = false;
+  pos = new Vec3(x, y, z);
+  move = new Vec3(0, 0, 0);
 }
 
-void Molecule::getMove(float& x_arg, float& y_arg, float& z_arg) {
-  if(flag_move) {
-    x_arg = x_new;
-    y_arg = y_new;
-    z_arg = z_new;
-    return;
-  }
-  
+Molecule::Molecule(TypeMolecule& t, Vec3& v) : type(t) {
+  flag_used = false;
+  flag_move = false;
+  pos = new Vec3(v);
+  move = new Vec3(0, 0, 0);
+}
+
+void Molecule::computeMove() {
   srand(time(NULL));
   float pi = 3.14159f;
   float r = type.getSpeed();
   float theta = pi*(float)rand()/(float)RAND_MAX;
   float phi =  2*pi*(float)rand()/(float)RAND_MAX;
-  
-  x_new = x + r*cos(phi)*cos(theta);
-  y_new = y + r*cos(phi)*sin(theta);
-  z_new = z + r*sin(phi); 
 
-  x_arg = x_new;
-  y_arg = y_new;
-  z_arg = z_new;
-
-  flag_move = true
+  delete(move);
+  move = new Vec3(r*cos(phi)*cos(theta), r*cos(phi)*sin(theta), r*sin(phi));
+  flag_move = true;
 }
 
-void Molecule::getPos(float &x, float &y, float &z) {
-  x = this->x;
-  y = this->y;
-  z = this->z;
+Vec3 Molecule::getMove() {
+  if(flag_move) {
+    return new Vec3(move);
+  } else {
+    computeMove();
+    return new Vec3(move);
+  }
+}
+
+Vec3 Molecule::getPos() {
+  return new Vec3(pos);
 }
 
 void Molecule::move() {
-  float a, b, c;
-  getMove(a, b, c);
-  this->x = this->x_new;
-  this->y = this->y_new;
-  this->z = this->z_new;
+  if(flag_move) {
+    pos += move;
+  } else {
+    computeMove();
+    pos += move;
+  }
   flag_move = false;
 }
 
 void Molecule::noMove() {
+  delete(move);
+  move = new Vec3(0, 0, 0);
   flag_move = true;
 }
 
@@ -71,5 +68,6 @@ bool Molecule::getState() {
 }
 
 void Molecule::outOfBounds() {
-  this->flag_move == false;
+  delete(move);
+  move = new Vec3(0, 0, 0);
 }

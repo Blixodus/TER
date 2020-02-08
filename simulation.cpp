@@ -9,9 +9,9 @@ int Simulation::findTypeID(char* name) {
   }
 }
 
-bool Simulation::checkBounds(float x, float y, float z, int t) {
-  int r = t.getSize();
-  return (x*x + y*y + z*z + r) <= diameter*diameter;
+bool Simulation::checkBounds(Vec3& v, int t) {
+  int r = typemolecule_list.at(t).getSize();
+  return 2*(v.length() + r) <= diameter;
 }
 
 bool Simulation::reactOne(int m) {
@@ -87,9 +87,19 @@ int Simulation::computeTrajectory(int m) {
   float x, y, z, x_new, y_new, z_new;
   mole.getPos(x, y, z);
   mole.getMove(x_new, y_new, z_new);
-  /* TODO */
   /* Calculate movement vector */
+  float x_dir = x_new - x;
+  float y_dir = y_new - y;
+  float z_dir = z_new - z;
   /* Calculate nearest molecule on trajectory */
+  bool flag_nearest = false;
+  Molecule nearest;
+  float dist_nearest = FLT_MAX;
+  float x2, y2, z2;
+  for(Molecule m : molecule_list) {
+    m.getPos(x2, y2, z2);
+    
+  }
 }
 
 void Simulation::setDiameter(int d) {

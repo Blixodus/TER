@@ -5,6 +5,7 @@
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
+#include "vec3.h"
 
 class Simulation : public AbstractSimulation {
  private:
