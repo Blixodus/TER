@@ -19,5 +19,4 @@ float TypeMolecule::getSpeed() const {
 
 int TypeMolecule::getSize() const {
   return size;
-	      
 }

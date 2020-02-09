@@ -107,9 +107,19 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   tr2 = findTypeID(r2);
   tp1 = findTypeID(p1);
   tp2 = findTypeID(p2);
+  bool flag_test = false;
   /* TODO */
   /* Check if reaction exists with same r1 and r2 */
   /* Otherwise create new reaction */
+  for(Reaction r : reaction_list) {
+    if(r.r1 == tr1 && r.r2 == tr2) {
+	    flag_test = true;
+      }
+  }
+  if(flag_test){
+    Reaction reac = new Reaction(/* Ajouter p1 et p2*/);
+    reaction_list.push_back(reac);
+  }
 }
 
 void Simulation::addMolecule(char* name, int amount) {
