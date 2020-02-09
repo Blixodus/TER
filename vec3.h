@@ -25,6 +25,6 @@ class Vec3 {
   void normalize();
   /* Get vector length */
   float length();
-}
+};
 
 #endif

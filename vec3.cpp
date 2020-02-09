@@ -16,14 +16,16 @@ Vec3& Vec3::operator+(const Vec3& o) {
   x_ = x + o.x;
   y_ = y + o.y;
   z_ = z + o.z;
-  return new Vec3(x_, y_, z_);
+  Ve3 result = new Vec3(x_, y_, z_);
+  return result;
 }
 
 Vec3& Vec3::operator-(const Vec3& o) {
   x_ = x - o.x;
   y_ = y - o.y;
   z_ = z - o.z;
-  return new Vec3(x_, y_, z_);
+  Vec3 result = new Vec3(x_, y_, z_);
+  return result;
 }
 
 float Vec3::operator*(const Vec3& o) {
@@ -34,7 +36,8 @@ float Vec3::operator*(const Vec3& o) {
 }
 
 Vec3& Vec3::operator*(const float s) {
-  return new Vec3(s*x, s*y, s*z);
+  Vec3 result = new Vec3(s*x, s*y, s*z);
+  return result;
 }
 
 void Vec3::operator+=(const Vec3& o) {
