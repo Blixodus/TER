@@ -40,8 +40,8 @@ bool Simulation::reactOne(int m) {
       break;
     }
   }
-  delete(pos);
-  delete(mole);
+  delete(&pos);
+  delete(&mole);
   return flag_reacted;
 }
 
@@ -75,10 +75,10 @@ bool Simulation::reactTwo(int m1, int m2) {
       break;
     }
   }
-  delete(pos1);
-  delete(pos2);
-  delete(mole1);
-  delete(mole2);
+  delete(&pos1);
+  delete(&pos2);
+  delete(&mole1);
+  delete(&mole2);
   return flag_reacted;
 }
 
@@ -101,7 +101,7 @@ int Simulation::computeTrajectory(int m) {
     if(i == m) i++;
     Molecule mole2 = molecule_list.at(i);
     r2 = mole2.type.getSize();
-    delete(pos2);
+    delete(&pos2);
     pos2 = mole2.getPos();
     /* Recentre space on pos */
     pos2 -= pos;
@@ -123,10 +123,10 @@ void Simulation::setDiameter(int d) {
 }
 
 void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
-  tr1 = findTypeID(r1);
-  tr2 = findTypeID(r2);
-  tp1 = findTypeID(p1);
-  tp2 = findTypeID(p2);
+  int tr1 = findTypeID(r1);
+  int tr2 = findTypeID(r2);
+  int tp1 = findTypeID(p1);
+  int tp2 = findTypeID(p2);
   bool flag_test = false;
   /* TODO */
   /* Check if reaction exists with same r1 and r2 */
@@ -143,10 +143,10 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
 }
 
 void Simulation::addMolecule(char* name, int amount) {
-  t = findTypeID(name);
-  x = 0.0;
-  y = 0.0;
-  z = 0.0;
+  int t = findTypeID(name);
+  float x = 0.0;
+  float y = 0.0;
+  float z = 0.0;
   Molecule m = new Molecule(&typemolecule_list.at(t), x, y, z);
   molecule_list.push_back(m);
 }
