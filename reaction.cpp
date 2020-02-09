@@ -23,7 +23,7 @@ void Reaction::add(int p1, float p) {
   add(p1, -1, p);
 }
 
-void Reaction::react(int& p1, int& p2) {
+void Reaction::react(int& p1, int& p2) const {
   std::srand(std::time(nullptr));
   float r = static_cast <float>(std::rand()) / static_cast <float>(RAND_MAX);
   int reac = 0;
