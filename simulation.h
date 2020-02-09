@@ -1,12 +1,11 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
-#include <vector>
-#include <cfloat>
 #include "abstractsimulation.h"
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
 #include "vec3.h"
+#include <vector>
 
 class Simulation : public AbstractSimulation {
  private:

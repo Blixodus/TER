@@ -7,6 +7,6 @@ class AbstractSimulation {
   
  public:
   virtual void run(int t = 1);
-}
+};
 
 #endif

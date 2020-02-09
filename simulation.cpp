@@ -1,11 +1,15 @@
 #include "simulation.h"
+#include <cfloat>
+#include <cmath>
+#include <cstring>
+
 
 Simulation::Simulation():typemolecule_list(), reaction_list(), molecule_list(){
 }
 
 int Simulation::findTypeID(char* name) {
   for(TypeMolecule t : typemolecule_list) {
-    if(!std::strcmp(name, t.name)) return t.type_id;
+    if(!strcmp(name, t.name)) return t.type_id;
   }
 }
 
@@ -146,7 +150,7 @@ void Simulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
   float x = 0.0;
   float y = 0.0;
-  float z = 0.0;
+  float nz = 0.0;
   Molecule m = new Molecule(&typemolecule_list.at(t), x, y, z);
   molecule_list.push_back(m);
 }

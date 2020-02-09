@@ -1,4 +1,8 @@
 #include "reaction.h"
+#include <iostream>
+#include <tuple>
+#include <cstdlib>
+#include <ctime>
 
 Reaction::Reaction(int ar1, int ar2, unsigned int reac_id) : r1(ar1), r2(ar2), react_id(reac_id) {
   prob_sum = 0.0;

@@ -1,10 +1,7 @@
 #ifndef REACTION_H
 #define REACTION_H
-#include <iostream>
 #include <vector>
-#include <tuple>
-#include <cstdlib>
-#include <ctime>
+
 
 class Reaction {
  private:

@@ -1,4 +1,8 @@
 #include "molecule.h"
+#include <cmath>
+#include <time.h>
+#include <vector>
+
 
 Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t), pos_vect(x, y, z), move_vect(0.0, 0.0, 0.0) {
   flag_used = false;

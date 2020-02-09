@@ -1,8 +1,5 @@
 #ifndef MOLECULE_H
 #define MOLECULE_H
-#include <cmath>
-#include <time.h>
-#include <vector>
 #include "typemolecule.h"
 #include "vec3.h"
 
