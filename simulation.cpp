@@ -83,19 +83,39 @@ bool Simulation::reactTwo(int m1, int m2) {
 }
 
 int Simulation::computeTrajectory(int m) {
+  int r1, r2;
   Molecule mole = molecule_list.at(m);
+  r1 = mole.type.getSize();
   Vec3 pos = mole.getPos();
   Vec3 dir = mole.getMove();
+  /* Keep movement distance and normalize */
+  float length_dir = dir.length();
+  dir.normalize();
   /* TODO Calculate nearest molecule on trajectory */
   bool flag_nearest = false;
-  Molecule nearest;
+  int nearest = -1;
   float dist_nearest = FLT_MAX;
   Vec3 pos2;
-  for(Molecule m : molecule_list) {
+  for(int i = 0; i < molecule_list.size(); i++) {
+    /* Skip itself */
+    if(i == m) i++;
+    Molecule mole2 = molecule_list.at(i);
+    r2 = mole2.type.getSize();
     delete(pos2);
-    pos2 = m.getPos();
-    Vec3 proj = 
+    pos2 = mole2.getPos();
+    /* Recentre space on pos */
+    pos2 -= pos;
+    /* Calculate projection of pos2 onto vector dir */
+    Vec3 proj = dir * ((pos2*dir)/(dir*dir));
+    float proj_length = proj.length();
+    /* If distance between proj and pos2 is smaller than the sum of the radii then there is a collision */
+    float dist = (pos2-proj).length();
+    if(dist < r1 + r2 && proj_length < length_dir && proj_length < dist_nearest) {
+      nearest = i;
+      dist_nearest = proj_length;
+    }
   }
+  return nearest;
 }
 
 void Simulation::setDiameter(int d) {

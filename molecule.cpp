@@ -1,17 +1,13 @@
 #include "molecule.h"
 
-Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t) {
+Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t), pos_vect(x, y, z), move_vect(0.0, 0.0, 0.0) {
   flag_used = false;
   flag_move = false;
-  pos = new Vec3(x, y, z);
-  move = new Vec3(0, 0, 0);
 }
 
-Molecule::Molecule(TypeMolecule& t, Vec3& v) : type(t) {
+Molecule::Molecule(TypeMolecule& t, Vec3& v) : type(t), pos_vect(v), move_vect(0.0, 0.0, 0.0) {
   flag_used = false;
   flag_move = false;
-  pos = new Vec3(v);
-  move = new Vec3(0, 0, 0);
 }
 
 void Molecule::computeMove() {
@@ -21,37 +17,41 @@ void Molecule::computeMove() {
   float theta = pi*(float)rand()/(float)RAND_MAX;
   float phi =  2*pi*(float)rand()/(float)RAND_MAX;
 
-  delete(move);
-  move = new Vec3(r*cos(phi)*cos(theta), r*cos(phi)*sin(theta), r*sin(phi));
+  float x = r*cos(phi)*cos(theta);
+  float y = r*cos(phi)*sin(theta);
+  float z = r*sin(phi);
+
+  delete(&move_vect);
+  move_vect = *(new Vec3(x, y, z));
   flag_move = true;
 }
 
 Vec3 Molecule::getMove() {
   if(flag_move) {
-    return new Vec3(move);
+    return *(new Vec3(move_vect));
   } else {
     computeMove();
-    return new Vec3(move);
+    return *(new Vec3(move_vect));
   }
 }
 
 Vec3 Molecule::getPos() {
-  return new Vec3(pos);
+  return *(new Vec3(pos_vect));
 }
 
 void Molecule::move() {
   if(flag_move) {
-    pos += move;
+    pos_vect += move_vect;
   } else {
     computeMove();
-    pos += move;
+    pos_vect += move_vect;
   }
   flag_move = false;
 }
 
 void Molecule::noMove() {
-  delete(move);
-  move = new Vec3(0, 0, 0);
+  delete(&move_vect);
+  move_vect = *(new Vec3(0.0, 0.0, 0.0));
   flag_move = true;
 }
 
@@ -68,6 +68,6 @@ bool Molecule::getState() {
 }
 
 void Molecule::outOfBounds() {
-  delete(move);
-  move = new Vec3(0, 0, 0);
+  delete(&move_vect);
+  move_vect = *(new Vec3(0.0, 0.0, 0.0));
 }

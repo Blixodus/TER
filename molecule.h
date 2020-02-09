@@ -8,9 +8,9 @@
 
 class Molecule {
  private:
-  Vec3 pos;
+  Vec3 pos_vect;
   /* Movement vector */
-  Vec3 move;
+  Vec3 move_vect;
   /* Whether or not the molecule has already reacted or moved */
   bool flag_used;
   /* Whether or not the molecule has already computed a new move */
