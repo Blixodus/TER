@@ -4,37 +4,37 @@
 #include <cstring>
 
 
-Simulation::Simulation():typemolecule_list(), reaction_list(), molecule_list(){
+Simulation::Simulation() : typemolecule_list(), reaction_list(), molecule_list() {
 }
 
-int Simulation::findTypeID(char* name) {
-  for(TypeMolecule t : typemolecule_list) {
-    if(!strcmp(name, t.name)) return t.type_id;
+int Simulation::findTypeID(char* name) const {
+  for(TypeMolecule* t : typemolecule_list) {
+    if(!strcmp(name, t->name)) return t->type_id;
   }
 }
 
-bool Simulation::checkBounds(Vec3& v, int t) {
-  int r = typemolecule_list.at(t).getSize();
+bool Simulation::checkBounds(Vec3& v, int t) const {
+  int r = typemolecule_list.at(t)->getSize();
   return 2*(v.length() + r) <= diameter;
 }
 
 bool Simulation::reactOne(int m) {
   bool flag_reacted = false;
-  Molecule mole = molecule_list.at(m);
-  Vec3 pos = mole.getPos();
-  int t = mole.type;
+  Molecule* mole = molecule_list.at(m);
+  Vec3 pos = mole->getPos();
+  int t = mole->type.type_id;
   int p1, p2;
-  for(Reaction r : reaction_list) {
-    if(r.r1 == t && r.r2 == -1) {
-      r.react(p1, p2);
+  for(Reaction* r : reaction_list) {
+    if(r->r1 == t && r->r2 == -1) {
+      r->react(p1, p2);
       if(p1 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p1), pos);
-	m.setUsed();
+	Molecule* m = new Molecule(*typemolecule_list.at(p1), pos);
+	m->setUsed();
 	molecule_list.push_back(m);
       }
       if(p2 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p2), pos);
-	m.setUsed();
+	Molecule* m = new Molecule(*typemolecule_list.at(p2), pos);
+	m->setUsed();
 	molecule_list.push_back(m);
       }
       if(p1 != -1 || p2 != -1) {
@@ -45,30 +45,30 @@ bool Simulation::reactOne(int m) {
     }
   }
   delete(&pos);
-  delete(&mole);
+  delete(mole);
   return flag_reacted;
 }
 
 bool Simulation::reactTwo(int m1, int m2) {
   bool flag_reacted = false;
-  Molecule mole1 = molecule_list.at(m1);
-  Molecule mole2 = molecule_list.at(m2);
-  Vec3 pos1 = mole1.getPos();
-  Vec3 pos2 = mole2.getPos();
-  int t1 = mole1.type;
-  int t2 = mole2.type;
+  Molecule* mole1 = molecule_list.at(m1);
+  Molecule* mole2 = molecule_list.at(m2);
+  Vec3 pos1 = mole1->getPos();
+  Vec3 pos2 = mole2->getPos();
+  int t1 = mole1->type.type_id;
+  int t2 = mole2->type.type_id;
   int p1, p2;
-  for(Reaction r : reaction_list) {
-    if(r.r1 == t1 && r.r2 == t2) {
-      r.react(p1, p2);
+  for(Reaction* r : reaction_list) {
+    if(r->r1 == t1 && r->r2 == t2) {
+      r->react(p1, p2);
       if(p1 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p1), pos1);
-	m.setUsed();
+	Molecule* m = new Molecule(*typemolecule_list.at(p1), pos1);
+	m->setUsed();
 	molecule_list.push_back(m);
       }
       if(p2 != -1) {
-	Molecule m = new Molecule(&typemolecule_list.at(p2), pos2);
-	m.setUsed();
+	Molecule* m = new Molecule(*typemolecule_list.at(p2), pos2);
+	m->setUsed();
 	molecule_list.push_back(m);
       }
       if(p1 != -1 || p2 != -1) {
@@ -81,17 +81,17 @@ bool Simulation::reactTwo(int m1, int m2) {
   }
   delete(&pos1);
   delete(&pos2);
-  delete(&mole1);
-  delete(&mole2);
+  delete(mole1);
+  delete(mole2);
   return flag_reacted;
 }
 
 int Simulation::computeTrajectory(int m) {
   int r1, r2;
-  Molecule mole = molecule_list.at(m);
-  r1 = mole.type.getSize();
-  Vec3 pos = mole.getPos();
-  Vec3 dir = mole.getMove();
+  Molecule* mole = molecule_list.at(m);
+  r1 = mole->type.getSize();
+  Vec3 pos = mole->getPos();
+  Vec3 dir = mole->getMove();
   /* Keep movement distance and normalize */
   float length_dir = dir.length();
   dir.normalize();
@@ -103,10 +103,10 @@ int Simulation::computeTrajectory(int m) {
   for(int i = 0; i < molecule_list.size(); i++) {
     /* Skip itself */
     if(i == m) i++;
-    Molecule mole2 = molecule_list.at(i);
-    r2 = mole2.type.getSize();
+    Molecule* mole2 = molecule_list.at(i);
+    r2 = mole2->type.getSize();
     delete(&pos2);
-    pos2 = mole2.getPos();
+    pos2 = mole2->getPos();
     /* Recentre space on pos */
     pos2 -= pos;
     /* Calculate projection of pos2 onto vector dir */
@@ -152,12 +152,12 @@ void Simulation::addMolecule(char* name, int amount) {
   float y = 0.0;
   float nz = 0.0;
   Molecule m = new Molecule(&typemolecule_list.at(t), x, y, z);
-  molecule_list.push_back(m);
+  molecule_list.push_back(*m);
 }
 
 void Simulation::addTypeMolecule(char* name) {
   TypeMolecule t = new TypeMolecule(typemolecule_list.size(), name);
-  typemolecule_list.push_back(t);
+  typemolecule_list.push_back(*t);
 }
 
 void Simulation::setTypeMoleculeSpeed(char* name, float speed) {

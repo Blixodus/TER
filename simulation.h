@@ -10,11 +10,11 @@
 class Simulation : public AbstractSimulation {
  private:
   int diameter;
-  std::vector<TypeMolecule> typemolecule_list;
-  std::vector<Reaction> reaction_list;
-  std::vector<Molecule> molecule_list;
+  std::vector<TypeMolecule*> typemolecule_list;
+  std::vector<Reaction*> reaction_list;
+  std::vector<Molecule*> molecule_list;
   /* Find id */
-  int findTypeID(char*);
+  int findTypeID(char*) const;
   /* Check that a point is within boundaries */
   bool checkBounds(Vec3&, int) const;
   /* Try to react one molecule */
