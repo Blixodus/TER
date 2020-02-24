@@ -6,6 +6,7 @@ class Vec3 {
  private:
   float x, y, z;
  public:
+  Vec3();
   Vec3(float, float, float);
   /* Copy constructor */
   Vec3(const Vec3&);
