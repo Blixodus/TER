@@ -2,8 +2,8 @@ LEX = flex
 YACC = bison -d
 CXX = g++
 
-main: main.cpp lexer.o parser.o simulation.o molecule.o typemolecule.o reaction.o
-	$(CXX) main.cpp lexer.o parser.o simulation.o molecule.o typemolecule.o reaction.o -o main
+main: main.cpp simulation.o molecule.o typemolecule.o reaction.o vec3.o
+	$(CXX) main.cpp simulation.o molecule.o typemolecule.o reaction.o vec3.o -o main
 
 #lexer.o: lexer.c parser.o
 #	$(CXX) -lfl -c lexer.c parser.o

@@ -1,13 +1,12 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
-#include "abstractsimulation.h"
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
 #include "vec3.h"
 #include <vector>
 
-class Simulation : public AbstractSimulation {
+class Simulation {
  private:
   int diameter;
   std::vector<TypeMolecule*> typemolecule_list;
@@ -35,7 +34,7 @@ class Simulation : public AbstractSimulation {
   void setTypeMoleculeSpeed(char*, float);
   void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks, default 1 tick */
-  void run(int t) override;
+  void run(int t);
 };
 
 #endif
