@@ -35,7 +35,7 @@ class Simulation : public AbstractSimulation {
   void setTypeMoleculeSpeed(char*, float);
   void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks, default 1 tick */
-  void run(int t = 1) override;
+  void run(int t) override;
 };
 
 #endif

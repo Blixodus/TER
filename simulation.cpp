@@ -135,14 +135,15 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   /* TODO */
   /* Check if reaction exists with same r1 and r2 */
   /* Otherwise create new reaction */
-  for(Reaction r : reaction_list) {
-    if(r.r1 == tr1 && r.r2 == tr2) {
-	    flag_test = true;
-      }
-  }
-  if(flag_test){
-    Reaction reac = new Reaction(/* Ajouter p1 et p2*/);
-    reaction_list.push_back(reac);
+  for(Reaction* r : reaction_list) {
+    if(r->r1 == tr1 && r->r2 == tr2) {
+	    r->add(tp1, tp2, p);
+    }
+    else{
+      Reaction* reac = new Reaction(tr1, tr2, reaction_list.size());
+      reaction_list.push_back(reac);
+      reac->add(tp1, tp2, p);      
+    }
   }
 }
 
@@ -150,24 +151,24 @@ void Simulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
   float x = 0.0;
   float y = 0.0;
-  float nz = 0.0;
-  Molecule m = new Molecule(&typemolecule_list.at(t), x, y, z);
-  molecule_list.push_back(*m);
+  float z = 0.0;
+  Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
+  molecule_list.push_back(m);
 }
 
 void Simulation::addTypeMolecule(char* name) {
-  TypeMolecule t = new TypeMolecule(typemolecule_list.size(), name);
-  typemolecule_list.push_back(*t);
+  TypeMolecule* t = new TypeMolecule(typemolecule_list.size(), name);
+  typemolecule_list.push_back(t);
 }
 
 void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
   int t = findTypeID(name);
-  t.setSpeed(speed);
+  typemolecule_list.at(t)->setSpeed(speed);
 }
 
 void Simulation::setTypeMoleculeSize(char* name, int size) {
   int t = findTypeID(name);
-  t.setSize(size);
+  typemolecule_list.at(t)->setSize(size);
 }
 
 void Simulation::run(int t = 1) {
@@ -184,18 +185,18 @@ void Simulation::run(int t = 1) {
       if(!collides || !reacted) reacted = reactOne(m);
       /* In case of no collision and no reaction move */
       if(collides && !reacted) {
-	molecule_list.at(m).setUsed();
-	molecule_list.at(m).noMove();
+	molecule_list.at(m)->setUsed();
+	molecule_list.at(m)->noMove();
       }
       /* In case of no collision and no reaction move */
       if(!collides && !reacted) {
-	molecule_list.at(m).setUsed();
-	molecule_list.at(m).move();
+	molecule_list.at(m)->setUsed();
+	molecule_list.at(m)->move();
       }
     }
     /* Reset all molecules */
-    for(Molecule m : molecule_list) {
-      m.setUnused();
+    for(Molecule* m : molecule_list) {
+      m->setUnused();
     }
   }
 }

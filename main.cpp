@@ -16,7 +16,7 @@ void initSim(void) {
 }
 
 int main(int argc, char** argv) {
-  simulation = new Simulation();
-  initSim();
+  //initSim();
+  
   return 0;
 }
