@@ -13,7 +13,7 @@ int Simulation::findTypeID(char* name) const {
   }
 }
 
-bool Simulation::checkBounds(Vec3& v, int t) const {
+bool Simulation::checkBounds(Vec3* v, int t) const {
   int r = typemolecule_list.at(t)->getSize();
   return 2*(v.length() + r) <= diameter;
 }
@@ -21,7 +21,7 @@ bool Simulation::checkBounds(Vec3& v, int t) const {
 bool Simulation::reactOne(int m) {
   bool flag_reacted = false;
   Molecule* mole = molecule_list.at(m);
-  Vec3 pos = mole->getPos();
+  Vec3* pos = mole->getPos();
   int t = mole->type.type_id;
   int p1, p2;
   for(Reaction* r : reaction_list) {
@@ -53,8 +53,8 @@ bool Simulation::reactTwo(int m1, int m2) {
   bool flag_reacted = false;
   Molecule* mole1 = molecule_list.at(m1);
   Molecule* mole2 = molecule_list.at(m2);
-  Vec3 pos1 = mole1->getPos();
-  Vec3 pos2 = mole2->getPos();
+  Vec3* pos1 = mole1->getPos();
+  Vec3* pos2 = mole2->getPos();
   int t1 = mole1->type.type_id;
   int t2 = mole2->type.type_id;
   int p1, p2;
@@ -93,9 +93,9 @@ int Simulation::computeTrajectory(int m) {
   std::cout<<"b"<<std::endl;
   r1 = mole->type.getSize();
   std::cout<<"c"<<std::endl;
-  Vec3 pos = mole->getPos();
+  Vec3* pos = mole->getPos();
   std::cout<<"d"<<std::endl;
-  Vec3 dir = mole->getMove();
+  Vec3* dir = mole->getMove();
   std::cout<<"ok"<<std::endl;
   /* Keep movement distance and normalize */
   float length_dir = dir.length();
@@ -104,7 +104,7 @@ int Simulation::computeTrajectory(int m) {
   bool flag_nearest = false;
   int nearest = -1;
   float dist_nearest = FLT_MAX;
-  Vec3 pos2;
+  Vec3* pos2;
   for(int i = 0; i < molecule_list.size(); i++) {
     /* Skip itself */
     if(i == m) i++;
@@ -117,7 +117,7 @@ int Simulation::computeTrajectory(int m) {
     /* Recentre space on pos */
     pos2 -= pos;
     /* Calculate projection of pos2 onto vector dir */
-    Vec3 proj = dir * ((pos2*dir)/(dir*dir));
+    Vec3* proj = dir * ((pos2*dir)/(dir*dir));
     float proj_length = proj.length();
     /* If distance between proj and pos2 is smaller than the sum of the radii then there is a collision */
     float dist = (pos2-proj).length();
@@ -193,18 +193,20 @@ void Simulation::print(void) const{
   }
   for (int i = 0; i<size; i++){
     std::cout<< " Type: "<< typemolecule_list.at(i)->name <<" Nombre: "<< nbMolecule[i]<<std::endl;
-  }
+  } 
+}
 
-  
+void Simulation::printReaction(void) const{
   for(Reaction* r : reaction_list){
-    r->
+    int r1 = r->r1;
+    int r2 = r->r2;
+    r->react(p1, p2);
+    std::cout<< r1 <<" + "<< r2 << " -> "<<p1<<" + "<<p2<<std::endl;  
   }
-
-
-
 }
 
 void Simulation::run(int t = 1) {
+  printReaction();
   print();
   for(int i = 0; i < t; i++) {
     std::cout<<"boucle1"<<std::endl;

@@ -24,6 +24,7 @@ class Simulation {
   int computeTrajectory(int) ; //retirer le const -> retire bug sinon pas compatible avec la fonction
   /* Fonction d'affichage en francais !*/
   void print(void) const;
+  void printReaction(void)const;
  public:
   Simulation();
   /* Set simulation diameter (used by parser) */
