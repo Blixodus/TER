@@ -196,14 +196,7 @@ void Simulation::print(void) const{
   } 
 }
 
-void Simulation::printReaction(void) const{
-  for(Reaction* r : reaction_list){
-    int r1 = r->r1;
-    int r2 = r->r2;
-    r->react(p1, p2);
-    std::cout<< r1 <<" + "<< r2 << " -> "<<p1<<" + "<<p2<<std::endl;  
-  }
-}
+
 
 void Simulation::run(int t = 1) {
   printReaction();
