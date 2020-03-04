@@ -44,7 +44,7 @@ bool Simulation::reactOne(int m) {
       break;
     }
   }
-  delete(&pos);
+  delete(pos);
   delete(mole);
   return flag_reacted;
 }
@@ -79,8 +79,8 @@ bool Simulation::reactTwo(int m1, int m2) {
       break;
     }
   }
-  delete(&pos1);
-  delete(&pos2);
+  delete(pos1);
+  delete(pos2);
   delete(mole1);
   delete(mole2);
   return flag_reacted;
@@ -111,7 +111,7 @@ int Simulation::computeTrajectory(int m) {
     Molecule* mole2 = molecule_list.at(i);
     r2 = mole2->type.getSize();
     std::cout<<"voi"<<std::endl;
-    delete(&pos2);
+    delete(pos2);
     std::cout<<"mmmh"<<std::endl;
     pos2 = mole2->getPos();
     /* Recentre space on pos */

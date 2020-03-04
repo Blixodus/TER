@@ -15,7 +15,7 @@ class Simulation {
   /* Find id */
   int findTypeID(char*) const;
   /* Check that a point is within boundaries */
-  bool checkBounds(Vec3&, int) const;
+  bool checkBounds(Vec3*, int) const;
   /* Try to react one molecule */
   bool reactOne(int);
   /* Try to react two molecules */
@@ -37,7 +37,7 @@ class Simulation {
   void setTypeMoleculeSpeed(char*, float);
   void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks, default 1 tick */
-  void run(int t);
+  void run(int t = 1);
 };
 
 #endif

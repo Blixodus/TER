@@ -9,21 +9,19 @@ class Vec3 {
   Vec3();
   Vec3(float, float, float);
   /* Copy constructor */
-  Vec3(const Vec3&);
-  /* Destructor */
-  ~Vec3();
+  Vec3(const Vec3*);
   /* Vector addition */
-  Vec3& operator+(const Vec3&) const;
+  Vec3* operator+(const Vec3*) const;
   /* Vector subtraction */
-  Vec3& operator-(const Vec3&) const;
+  Vec3* operator-(const Vec3*) const;
   /* Dot product */
-  float operator*(const Vec3&) const;
+  float operator*(const Vec3*) const;
   /* Scalar product */
-  Vec3& operator*(const float) const;
+  Vec3* operator*(const float) const;
   /* Add and affect */
-  void operator+=(const Vec3&);
+  void operator+=(const Vec3*);
   /* Sub and affect */
-  void operator-=(const Vec3&);
+  void operator-=(const Vec3*);
   /* Normalize */
   void normalize();
   /* Get vector length */

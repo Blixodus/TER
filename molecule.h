@@ -5,9 +5,9 @@
 
 class Molecule {
  private:
-  Vec3 pos_vect;
+  Vec3* pos_vect;
   /* Movement vector */
-  Vec3 move_vect;
+  Vec3* move_vect;
   /* Whether or not the molecule has already reacted or moved */
   bool flag_used;
   /* Whether or not the molecule has already computed a new move */
@@ -17,11 +17,13 @@ class Molecule {
  public:
   const TypeMolecule type;
   Molecule(TypeMolecule&, float, float, float);
-  Molecule(TypeMolecule&, Vec3&);
+  Molecule(TypeMolecule&, Vec3*);
+  /* Destructor */
+  ~Molecule();
   /* Get position onto which the molecule would move */
-  Vec3 getMove();
+  Vec3* getMove();
   /* Get current position */
-  Vec3 getPos();
+  Vec3* getPos();
   /* Move to calculated position or do not move */
   void move();
   void noMove();
