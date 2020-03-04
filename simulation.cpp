@@ -2,6 +2,7 @@
 #include <cfloat>
 #include <cmath>
 #include <cstring>
+#include <iostream>
 
 Simulation::Simulation() : typemolecule_list(), reaction_list(), molecule_list() {
 }
@@ -87,10 +88,15 @@ bool Simulation::reactTwo(int m1, int m2) {
 
 int Simulation::computeTrajectory(int m) {
   int r1, r2;
+  std::cout<<"a"<<std::endl;
   Molecule* mole = molecule_list.at(m);
+  std::cout<<"b"<<std::endl;
   r1 = mole->type.getSize();
+  std::cout<<"c"<<std::endl;
   Vec3 pos = mole->getPos();
+  std::cout<<"d"<<std::endl;
   Vec3 dir = mole->getMove();
+  std::cout<<"ok"<<std::endl;
   /* Keep movement distance and normalize */
   float length_dir = dir.length();
   dir.normalize();
@@ -104,7 +110,9 @@ int Simulation::computeTrajectory(int m) {
     if(i == m) i++;
     Molecule* mole2 = molecule_list.at(i);
     r2 = mole2->type.getSize();
+    std::cout<<"voi"<<std::endl;
     delete(&pos2);
+    std::cout<<"mmmh"<<std::endl;
     pos2 = mole2->getPos();
     /* Recentre space on pos */
     pos2 -= pos;
@@ -151,8 +159,10 @@ void Simulation::addMolecule(char* name, int amount) {
   float x = 0.0;
   float y = 0.0;
   float z = 0.0;
-  Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
-  molecule_list.push_back(m);
+  for(int i = 0; i < amount; i++) {
+    Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
+    molecule_list.push_back(m);
+  }
 }
 
 void Simulation::addTypeMolecule(char* name) {
@@ -170,18 +180,48 @@ void Simulation::setTypeMoleculeSize(char* name, int size) {
   typemolecule_list.at(t)->setSize(size);
 }
 
+void Simulation::print(void) const{
+  //Number of molecule per type
+  int size = typemolecule_list.size();
+  int nbMolecule[size] ;
+  for (int i = 0; i<size; i++){
+    nbMolecule[i] = 0;
+  }
+  for(Molecule* m : molecule_list){
+    int tID = m->type.type_id;
+    nbMolecule[tID] += 1;
+  }
+  for (int i = 0; i<size; i++){
+    std::cout<< " Type: "<< typemolecule_list.at(i)->name <<" Nombre: "<< nbMolecule[i]<<std::endl;
+  }
+
+  
+  for(Reaction* r : reaction_list){
+    r->
+  }
+
+
+
+}
+
 void Simulation::run(int t = 1) {
-  /* TODO */
+  print();
   for(int i = 0; i < t; i++) {
+    std::cout<<"boucle1"<<std::endl;
     for(int m = 0; m < molecule_list.size(); m++) {
+      std::cout<<"boucle2"<<std::endl;
       /* Find nearest molecule in trajectory */
+      std::cout<<"bbbb"<<std::endl;
       int collision = computeTrajectory(m);
+      std::cout<<"1"<<std::endl;
       bool collides = (collision != -1);
       bool reacted;
       /* In case of collision try to react */
       if(collides) reacted = reactTwo(m, collision);
+      std::cout<<"2"<<std::endl;
       /* In case of no collision or no reaction try to react alone */
       if(!collides || !reacted) reacted = reactOne(m);
+      std::cout<<"boucle3"<<std::endl;
       /* In case of no collision and no reaction move */
       if(collides && !reacted) {
 	molecule_list.at(m)->setUsed();
@@ -197,5 +237,6 @@ void Simulation::run(int t = 1) {
     for(Molecule* m : molecule_list) {
       m->setUnused();
     }
+    print();
   }
 }

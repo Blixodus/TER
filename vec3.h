@@ -10,6 +10,8 @@ class Vec3 {
   Vec3(float, float, float);
   /* Copy constructor */
   Vec3(const Vec3&);
+  /* Destructor */
+  ~Vec3();
   /* Vector addition */
   Vec3& operator+(const Vec3&) const;
   /* Vector subtraction */

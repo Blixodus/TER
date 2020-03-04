@@ -2,16 +2,18 @@
 #include <cmath>
 #include <time.h>
 #include <vector>
+#include <iostream>
 
-
-Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t), pos_vect(x, y, z), move_vect(0.0, 0.0, 0.0) {
+Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t), pos_vect(x, y, z) {
   flag_used = false;
   flag_move = false;
+  move_vect = *(new Vec3(0.0, 0.0, 0.0));
 }
 
-Molecule::Molecule(TypeMolecule& t, Vec3& v) : type(t), pos_vect(v), move_vect(0.0, 0.0, 0.0) {
+Molecule::Molecule(TypeMolecule& t, Vec3& v) : type(t), pos_vect(v) {
   flag_used = false;
   flag_move = false;
+  move_vect = *(new Vec3(0.0, 0.0, 0.0));
 }
 
 void Molecule::computeMove() {
@@ -24,8 +26,10 @@ void Molecule::computeMove() {
   float x = r*cos(phi)*cos(theta);
   float y = r*cos(phi)*sin(theta);
   float z = r*sin(phi);
-
+  
+  std::cout<<&move_vect<<std::endl;
   delete(&move_vect);
+  std::cout<<"ou la ?"<<std::endl;
   move_vect = *(new Vec3(x, y, z));
   flag_move = true;
 }

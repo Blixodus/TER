@@ -20,6 +20,10 @@ Vec3::Vec3(const Vec3& o) {
   z = o.z;
 }
 
+Vec3::~Vec3() {
+  
+}
+
 Vec3& Vec3::operator+(const Vec3& o) const {
   float x_ = x + o.x;
   float y_ = y + o.y;
