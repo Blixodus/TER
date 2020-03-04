@@ -15,7 +15,7 @@ int Simulation::findTypeID(char* name) const {
 
 bool Simulation::checkBounds(Vec3* v, int t) const {
   int r = typemolecule_list.at(t)->getSize();
-  return 2*(v.length() + r) <= diameter;
+  return 2*(v->length() + r) <= diameter;
 }
 
 bool Simulation::reactOne(int m) {
@@ -98,8 +98,8 @@ int Simulation::computeTrajectory(int m) {
   Vec3* dir = mole->getMove();
   std::cout<<"ok"<<std::endl;
   /* Keep movement distance and normalize */
-  float length_dir = dir.length();
-  dir.normalize();
+  float length_dir = dir->length();
+  dir->normalize();
   /* TODO Calculate nearest molecule on trajectory */
   bool flag_nearest = false;
   int nearest = -1;
@@ -115,12 +115,12 @@ int Simulation::computeTrajectory(int m) {
     std::cout<<"mmmh"<<std::endl;
     pos2 = mole2->getPos();
     /* Recentre space on pos */
-    pos2 -= pos;
+    pos2->add(pos);
     /* Calculate projection of pos2 onto vector dir */
-    Vec3* proj = dir * ((pos2*dir)/(dir*dir));
-    float proj_length = proj.length();
+    Vec3* proj = dir->scal((pos2->dot(dir))/(dir->dot(dir)));
+    float proj_length = proj->length();
     /* If distance between proj and pos2 is smaller than the sum of the radii then there is a collision */
-    float dist = (pos2-proj).length();
+    float dist = (pos2-proj)->length();
     if(dist < r1 + r2 && proj_length < length_dir && proj_length < dist_nearest) {
       nearest = i;
       dist_nearest = proj_length;
