@@ -183,12 +183,17 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
 
 void Simulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
-  float x = 0.0;
-  float y = 0.0;
-  float z = 0.0;
-  for(int i = 0; i < amount; i++) {
-    Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
-    molecule_list.push_back(m);
+  if(t != -1) {
+    float x = 0.0;
+    float y = 0.0;
+    float z = 0.0;
+    for(int i = 0; i < amount; i++) {
+      Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
+      molecule_list.push_back(m);
+    }
+  } else {
+    std::cerr << "Undefined molecule type!" << std::endl;
+    exit(0);
   }
 }
 
@@ -200,11 +205,19 @@ void Simulation::addTypeMolecule(char* name) {
 void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
   int t = findTypeID(name);
   if(t!=-1) typemolecule_list.at(t)->setSpeed(speed);
+  else {
+    std::cerr << "Undefined molecule type!" << std::endl;
+    exit(0);
+  }
 }
 
 void Simulation::setTypeMoleculeSize(char* name, int size) {
   int t = findTypeID(name);
   if(t!=-1) typemolecule_list.at(t)->setSize(size);
+  else {
+    std::cerr << "Undefined molecule type!" << std::endl;
+    exit(0);
+  }
 }
 
 void Simulation::run(int t) {
