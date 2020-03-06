@@ -22,8 +22,10 @@ class Simulation {
   bool reactTwo(int, int);
   /* Calculates the molecule in trajectory if any, parameter position in list, return position in list or -1 if none */
   int computeTrajectory(int) ; //retirer le const -> retire bug sinon pas compatible avec la fonction
-  /* Fonction d'affichage en francais !*/
+  /* Print simulation state */
   void print(void) const;
+  /* Print reactions in simulation */
+  void printReactions(void) const;
  public:
   Simulation();
   /* Set simulation diameter (used by parser) */

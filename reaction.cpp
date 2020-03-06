@@ -26,15 +26,7 @@ void Reaction::add(int p1, int p2, float p) {
 void Reaction::add(int p1, float p) {
   add(p1, -1, p);
 }
-/*
-void Reaction::printReaction(void) const{
-  int r1 = r->r1;
-  int r2 = r->r2;
-  int p1 = std::get<0>(product_id.at(reac));
-  int p2 = std::get<1>(product_id.at(reac));
-  std::cout<< r1 <<" + "<< r2 << " -> "<<p1<<" + "<<p2 << " ("<<prob_sum<< ")"<<std::endl;  
-}
-*/
+
 void Reaction::react(int& p1, int& p2) const {
   std::srand(std::time(nullptr));
   float r = static_cast <float>(std::rand()) / static_cast <float>(RAND_MAX);
@@ -50,4 +42,14 @@ void Reaction::react(int& p1, int& p2) const {
   }
   p1 = -1;
   p2 = -1;
+}
+
+int* Reaction::getProducts(int& len) const {
+  len = product_id.size();
+  int* prod = new int[2*len];
+  for(int i = 0; i < len; i++) {
+    prod[i*2] = std::get<0>(product_id.at(i));
+    prod[i*2+1] = std::get<1>(product_id.at(i));
+  }
+  return prod;
 }

@@ -21,7 +21,7 @@ class Reaction {
   void add(int, float);
   /* Set product id into p1 and p2 */
   void react(int&, int&) const;
-  void printReaction(void) const;
+  int* getProducts(int&) const;
 };
 
 #endif
