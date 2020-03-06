@@ -199,12 +199,12 @@ void Simulation::addTypeMolecule(char* name) {
 
 void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
   int t = findTypeID(name);
-  typemolecule_list.at(t)->setSpeed(speed);
+  if(t!=-1) typemolecule_list.at(t)->setSpeed(speed);
 }
 
 void Simulation::setTypeMoleculeSize(char* name, int size) {
   int t = findTypeID(name);
-  typemolecule_list.at(t)->setSize(size);
+  if(t!=-1) typemolecule_list.at(t)->setSize(size);
 }
 
 void Simulation::run(int t) {
