@@ -103,6 +103,7 @@ int Simulation::computeTrajectory(int m) {
   for(int i = 0; i < molecule_list.size(); i++) {
     /* Skip itself */
     if(i == m) i++;
+    if(i >= molecule_list.size()) break;
     Molecule* mole2 = molecule_list.at(i);
     r2 = mole2->type.getSize();
     delete(pos2);
@@ -202,10 +203,8 @@ void Simulation::run(int t) {
       bool reacted;
       /* In case of collision try to react */
       if(collides) reacted = reactTwo(m, collision);
-      std::cout<<"2"<<std::endl;
       /* In case of no collision or no reaction try to react alone */
       if(!collides || !reacted) reacted = reactOne(m);
-      std::cout<<"boucle3"<<std::endl;
       /* In case of no collision and no reaction move */
       if(collides && !reacted) {
 	molecule_list.at(m)->setUsed();
@@ -216,6 +215,7 @@ void Simulation::run(int t) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->move();
       }
+      std::cout << "Calculated molecule " << m << std::endl;
     }
     /* Reset all molecules */
     for(Molecule* m : molecule_list) {

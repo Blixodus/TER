@@ -34,9 +34,7 @@ void Molecule::computeMove() {
   float y = r*cos(phi)*sin(theta);
   float z = r*sin(phi);
 
-  std::cout<<"test"<<std::endl;
   delete move_vect;
-  std::cout<<"ou la ?"<<std::endl;
   move_vect = new Vec3(x, y, z);
   flag_move = true;
 }
