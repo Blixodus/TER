@@ -163,11 +163,14 @@ void Simulation::setDiameter(int d) {
 }
 
 void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
+  std::cout << "addReac" << std::endl;
   int tr1 = findTypeID(r1);
   int tr2 = findTypeID(r2);
   int tp1 = findTypeID(p1);
   int tp2 = findTypeID(p2);
-  bool flag_test = false;
+  if(tr1 == -1 && tr2 == -1) {
+    std::cerr << "" << std::endl;
+  }
   /* Check if reaction exists with same r1 and r2 */
   for(Reaction* r : reaction_list) {
     if(r->r1 == tr1 && r->r2 == tr2) {
@@ -192,7 +195,7 @@ void Simulation::addMolecule(char* name, int amount) {
       molecule_list.push_back(m);
     }
   } else {
-    std::cerr << "Undefined molecule type!" << std::endl;
+    std::cerr << "Undefined molecule type " << name << std::endl;
     exit(0);
   }
 }
@@ -206,7 +209,7 @@ void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
   int t = findTypeID(name);
   if(t!=-1) typemolecule_list.at(t)->setSpeed(speed);
   else {
-    std::cerr << "Undefined molecule type!" << std::endl;
+    std::cerr << "Undefined molecule type " << name << std::endl;
     exit(0);
   }
 }
@@ -215,7 +218,7 @@ void Simulation::setTypeMoleculeSize(char* name, int size) {
   int t = findTypeID(name);
   if(t!=-1) typemolecule_list.at(t)->setSize(size);
   else {
-    std::cerr << "Undefined molecule type!" << std::endl;
+    std::cerr << "Undefined molecule type " << name << std::endl;
     exit(0);
   }
 }
