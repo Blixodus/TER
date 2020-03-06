@@ -18,15 +18,6 @@ void initSim(void) {
 int main(int argc, char** argv) {
   initSim();
   simulation.setDiameter(5);
-<<<<<<< HEAD
-  char* p1 = (char*) "p1";
-  simulation.addTypeMolecule(p1);
-  simulation.addMolecule(p1, 12);
-  simulation.addReaction(p1, p1, p1, p1, 0.02);
-  simulation.setTypeMoleculeSpeed(p1, 0.09 );
-  simulation.setTypeMoleculeSize(p1, 4);
-  simulation.run(1);
-=======
   char* E = (char*) "E";
   char* s = (char*) "s";
   char* p = (char*) "p";
@@ -42,7 +33,6 @@ int main(int argc, char** argv) {
   simulation.setTypeMoleculeSize(s, 4);
   simulation.setTypeMoleculeSize(p, 4);
   simulation.run(10);
->>>>>>> 60765e2baccca290fe0f3040b784a0a15fdc4c67
   
   
   return 0;

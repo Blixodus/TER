@@ -9,7 +9,6 @@ extern "C" int yylex();
 						
 %%
 
-maelle {return MAELLE;}
 espece			{ return TYPE; }
 diametre 		{ return DIAM; }
 taille 			{ return SIZE; }
