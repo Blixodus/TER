@@ -169,6 +169,7 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   int tp2 = findTypeID(p2);
   if(tr1 == -1 && tr2 == -1 || tp1 == -1 && tp2 == -1) {
     std::cerr << "Undefined reaction types" << std::endl;
+    exit(0);
   }
   /* Check if reaction exists with same r1 and r2 */
   for(Reaction* r : reaction_list) {
