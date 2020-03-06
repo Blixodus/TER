@@ -36,7 +36,7 @@ class Simulation {
   void setTypeMoleculeSpeed(char*, float);
   void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks, default 1 tick */
-  void run(int t = 1);
+  void run(int);
 };
 
 #endif

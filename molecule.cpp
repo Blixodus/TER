@@ -7,14 +7,14 @@
 Molecule::Molecule(TypeMolecule& t, float x, float y, float z) : type(t) {
   flag_used = false;
   flag_move = false;
-  pos_vect = new Vec3(x, y, z)
+  pos_vect = new Vec3(x, y, z);
   move_vect = new Vec3(0.0, 0.0, 0.0);
 }
 
-Molecule::Molecule(TypeMolecule& t, Vec3& v) : type(t) {
+Molecule::Molecule(TypeMolecule& t, Vec3* v) : type(t) {
   flag_used = false;
   flag_move = false;
-  pos_vect = new Vec3(x, y, z)
+  pos_vect = new Vec3(v);
   move_vect = new Vec3(0.0, 0.0, 0.0);
 }
 
@@ -56,10 +56,10 @@ Vec3* Molecule::getPos() {
 
 void Molecule::move() {
   if(flag_move) {
-    pos_vect += move_vect;
+    pos_vect->add(move_vect);
   } else {
     computeMove();
-    pos_vect += move_vect;
+    pos_vect->add(move_vect);
   }
   flag_move = false;
 }

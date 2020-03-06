@@ -88,15 +88,10 @@ bool Simulation::reactTwo(int m1, int m2) {
 
 int Simulation::computeTrajectory(int m) {
   int r1, r2;
-  std::cout<<"a"<<std::endl;
   Molecule* mole = molecule_list.at(m);
-  std::cout<<"b"<<std::endl;
   r1 = mole->type.getSize();
-  std::cout<<"c"<<std::endl;
   Vec3* pos = mole->getPos();
-  std::cout<<"d"<<std::endl;
   Vec3* dir = mole->getMove();
-  std::cout<<"ok"<<std::endl;
   /* Keep movement distance and normalize */
   float length_dir = dir->length();
   dir->normalize();
@@ -104,7 +99,7 @@ int Simulation::computeTrajectory(int m) {
   bool flag_nearest = false;
   int nearest = -1;
   float dist_nearest = FLT_MAX;
-  Vec3* pos2;
+  Vec3* pos2 = mole->getPos();
   for(int i = 0; i < molecule_list.size(); i++) {
     /* Skip itself */
     if(i == m) i++;
@@ -116,11 +111,14 @@ int Simulation::computeTrajectory(int m) {
     pos2 = mole2->getPos();
     /* Recentre space on pos */
     pos2->add(pos);
+    Vec3* proj = new Vec3(dir);
     /* Calculate projection of pos2 onto vector dir */
-    Vec3* proj = dir->scal((pos2->dot(dir))/(dir->dot(dir)));
+    proj->scal((pos2->dot(dir))/(dir->dot(dir)));
     float proj_length = proj->length();
     /* If distance between proj and pos2 is smaller than the sum of the radii then there is a collision */
-    float dist = (pos2-proj)->length();
+    Vec3* dis = new Vec3(pos2);
+    dis->sub(proj);
+    float dist = dis->length();
     if(dist < r1 + r2 && proj_length < length_dir && proj_length < dist_nearest) {
       nearest = i;
       dist_nearest = proj_length;
@@ -196,10 +194,7 @@ void Simulation::print(void) const{
   } 
 }
 
-
-
-void Simulation::run(int t = 1) {
-  printReaction();
+void Simulation::run(int t) {
   print();
   for(int i = 0; i < t; i++) {
     std::cout<<"boucle1"<<std::endl;
