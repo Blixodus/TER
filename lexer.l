@@ -4,9 +4,12 @@
 
 extern "C" int yylex();
 %}
+
+%option noyywrap
 						
 %%
 
+maelle {return MAELLE;}
 espece			{ return TYPE; }
 diametre 		{ return DIAM; }
 taille 			{ return SIZE; }
@@ -18,7 +21,7 @@ init 			{ return INIT; }
 			  return FLOAT; }
 [0-9]+ 			{ yylval.ival = atoi(yytext);
 			  return INT; }
-\/\/.*\n 		{ } // Ignore comments
+\/\/.* 		{ } // Ignore comments
 ","			{ return COMMA; }
 ";"			{ return SEMI; }
 "("			{ return OPARAN; }

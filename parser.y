@@ -36,16 +36,19 @@ void yyerror(const char* s);
 %token			OBRACKET		
 %token			CBRACKET		
 
+
 %type	<sval>		morereact
 			
 %%
 
-axiom: 		type diam listother
-		
+/*axiom: type diam listother */
+
+axiom: listother
+
 type: 		TYPE listtype SEMI
 		
 listtype: 	ID	
-		    | 	ID COMMA listtype { simulation.addTypeMolecule($1); free($1); }	
+		    | 	ID COMMA listtype { printf("chanson"); simulation.addTypeMolecule($1);  free($1); }	
 		
 diam: 		DIAM EQUAL INT SEMI { simulation.setDiameter($3); }
 		
@@ -71,6 +74,6 @@ init: 		INIT OPARAN ID CPARAN EQUAL INT SEMI { simulation.addMolecule($3, $6); f
 %%
 
 void yyerror(const char* s) {
-    std::cerr << "Parse error" << s << std::endl;
+    std::cerr << std::endl << "Parse error : " << s << std::endl;
     exit(-1);
 }

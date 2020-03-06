@@ -4,22 +4,21 @@
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
-//#include "parser.h"
+#include "parser.h"
 
 Simulation simulation;
-/*
+
 void initSim(void) {
   if(yyparse()) {
     std::cout << "Parser error, aborting!" << std::endl;
     std::exit(0);
   }
 }
-*/
+
 int main(int argc, char** argv) {
-  //initSim();
+  initSim();
   simulation.setDiameter(5);
   char* p1 = (char*) "p1";
-  
   simulation.addTypeMolecule(p1);
   simulation.addMolecule(p1, 12);
   simulation.addReaction(p1, p1, p1, p1, 0.02);
