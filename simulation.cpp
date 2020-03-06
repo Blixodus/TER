@@ -40,12 +40,12 @@ bool Simulation::reactOne(int m) {
       if(p1 != -1 || p2 != -1) {
 	molecule_list.erase(molecule_list.begin() + m);
 	flag_reacted = true;
+	delete(mole);
       }
       break;
     }
   }
   delete(pos);
-  delete(mole);
   return flag_reacted;
 }
 
@@ -75,14 +75,14 @@ bool Simulation::reactTwo(int m1, int m2) {
 	molecule_list.erase(molecule_list.begin() + m1);
 	molecule_list.erase(molecule_list.begin() + m2);
 	flag_reacted = true;
+	delete(mole1);
+	delete(mole2);
       }
       break;
     }
   }
   delete(pos1);
   delete(pos2);
-  delete(mole1);
-  delete(mole2);
   return flag_reacted;
 }
 
@@ -105,9 +105,7 @@ int Simulation::computeTrajectory(int m) {
     if(i == m) i++;
     Molecule* mole2 = molecule_list.at(i);
     r2 = mole2->type.getSize();
-    std::cout<<"voi"<<std::endl;
     delete(pos2);
-    std::cout<<"mmmh"<<std::endl;
     pos2 = mole2->getPos();
     /* Recentre space on pos */
     pos2->add(pos);
@@ -197,13 +195,9 @@ void Simulation::print(void) const{
 void Simulation::run(int t) {
   print();
   for(int i = 0; i < t; i++) {
-    std::cout<<"boucle1"<<std::endl;
     for(int m = 0; m < molecule_list.size(); m++) {
-      std::cout<<"boucle2"<<std::endl;
       /* Find nearest molecule in trajectory */
-      std::cout<<"bbbb"<<std::endl;
       int collision = computeTrajectory(m);
-      std::cout<<"1"<<std::endl;
       bool collides = (collision != -1);
       bool reacted;
       /* In case of collision try to react */
