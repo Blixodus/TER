@@ -11,6 +11,7 @@ int Simulation::findTypeID(char* name) const {
   for(TypeMolecule* t : typemolecule_list) {
     if(!strcmp(name, t->name)) return t->type_id;
   }
+  return -1;
 }
 
 bool Simulation::checkBounds(Vec3* v, int t) const {
@@ -40,12 +41,12 @@ bool Simulation::reactOne(int m) {
       if(p1 != -1 || p2 != -1) {
 	molecule_list.erase(molecule_list.begin() + m);
 	flag_reacted = true;
-	delete(mole);
+	delete mole;
       }
       break;
     }
   }
-  delete(pos);
+  delete pos;
   return flag_reacted;
 }
 
@@ -59,7 +60,7 @@ bool Simulation::reactTwo(int m1, int m2) {
   int t2 = mole2->type.type_id;
   int p1, p2;
   for(Reaction* r : reaction_list) {
-    if(r->r1 == t1 && r->r2 == t2) {
+    if(r->r1 == t1 && r->r2 == t2 || r->r1 == t2 && r->r2 == t1) {
       r->react(p1, p2);
       if(p1 != -1) {
 	Molecule* m = new Molecule(*typemolecule_list.at(p1), pos1);
@@ -75,14 +76,14 @@ bool Simulation::reactTwo(int m1, int m2) {
 	molecule_list.erase(molecule_list.begin() + m1);
 	molecule_list.erase(molecule_list.begin() + m2);
 	flag_reacted = true;
-	delete(mole1);
-	delete(mole2);
+	delete mole1;
+	delete mole2;
       }
       break;
     }
   }
-  delete(pos1);
-  delete(pos2);
+  delete pos1;
+  delete pos2;
   return flag_reacted;
 }
 
@@ -126,6 +127,37 @@ int Simulation::computeTrajectory(int m) {
   return nearest;
 }
 
+void Simulation::print(void) const {
+  int size = typemolecule_list.size();
+  int nbMolecule[size] ;
+  for(int i = 0; i < size; i++) {
+    nbMolecule[i] = 0;
+  }
+  /* Count molecules for each type */
+  for(Molecule* m : molecule_list) {
+    int tID = m->type.type_id;
+    nbMolecule[tID] += 1;
+  }
+  for(int i = 0; i < size; i++) {
+    std::cout << "-- " << nbMolecule[i] << " molecules of type " << typemolecule_list.at(i)->name << std::endl;
+  } 
+}
+
+void Simulation::printReactions(void) const {
+  for(Reaction* r : reaction_list) {
+    int len;
+    int* products = r->getProducts(len);
+    const char* r1 = (r->r1==-1)?"None":typemolecule_list.at(r->r1)->name;
+    const char* r2 = (r->r2==-1)?"None":typemolecule_list.at(r->r2)->name;
+    for(int i = 0; i < len; i++) {
+      const char* p1 = (products[2*i]==-1)?"None":typemolecule_list.at(products[2*i])->name;
+      const char* p2 = (products[2*i+1]==-1)?"None":typemolecule_list.at(products[2*i+1])->name;
+      std::cout << r1 << " + " << r2 << " -> " << p1 << " + " << p2 << std::endl;
+    }
+    delete [] products;
+  }
+}
+
 void Simulation::setDiameter(int d) {
   diameter = d;
 }
@@ -136,19 +168,17 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   int tp1 = findTypeID(p1);
   int tp2 = findTypeID(p2);
   bool flag_test = false;
-  /* TODO */
   /* Check if reaction exists with same r1 and r2 */
-  /* Otherwise create new reaction */
   for(Reaction* r : reaction_list) {
     if(r->r1 == tr1 && r->r2 == tr2) {
-	    r->add(tp1, tp2, p);
-    }
-    else{
-      Reaction* reac = new Reaction(tr1, tr2, reaction_list.size());
-      reaction_list.push_back(reac);
-      reac->add(tp1, tp2, p);      
+      r->add(tp1, tp2, p);
+      return;
     }
   }
+  /* Otherwise create new reaction */
+  Reaction* r = new Reaction(tr1, tr2, reaction_list.size());
+  r->add(tp1, tp2, p);
+  reaction_list.push_back(r);
 }
 
 void Simulation::addMolecule(char* name, int amount) {
@@ -177,23 +207,10 @@ void Simulation::setTypeMoleculeSize(char* name, int size) {
   typemolecule_list.at(t)->setSize(size);
 }
 
-void Simulation::print(void) const{
-  //Number of molecule per type
-  int size = typemolecule_list.size();
-  int nbMolecule[size] ;
-  for (int i = 0; i<size; i++){
-    nbMolecule[i] = 0;
-  }
-  for(Molecule* m : molecule_list){
-    int tID = m->type.type_id;
-    nbMolecule[tID] += 1;
-  }
-  for (int i = 0; i<size; i++){
-    std::cout<< " Type: "<< typemolecule_list.at(i)->name <<" Nombre: "<< nbMolecule[i]<<std::endl;
-  } 
-}
-
 void Simulation::run(int t) {
+  std::cout << "Reactions in simulation" << std::endl;
+  printReactions();
+  std::cout << std::endl << "State before" << std::endl;
   print();
   for(int i = 0; i < t; i++) {
     for(int m = 0; m < molecule_list.size(); m++) {
@@ -215,12 +232,13 @@ void Simulation::run(int t) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->move();
       }
-      std::cout << "Calculated molecule " << m << std::endl;
+      if(reacted) std::cout << "Molecule " << m << " reacted!!" << std::endl;
     }
     /* Reset all molecules */
     for(Molecule* m : molecule_list) {
-      m->setUnused();
+      m->resetState();
     }
+    std::cout << std::endl << "State after " << i+1 << " iterations" << std::endl;
     print();
   }
 }

@@ -76,6 +76,11 @@ void Molecule::setUnused() {
   this->flag_used = false;
 }
 
+void Molecule::resetState() {
+  this->flag_used = false;
+  this->flag_move = false;
+}
+
 bool Molecule::getState() {
   return this->flag_used;
 }

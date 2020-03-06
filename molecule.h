@@ -31,6 +31,8 @@ class Molecule {
   void setUsed();
   /* Mark unused */
   void setUnused();
+  /* Reset flags */
+  void resetState();
   /* Get used/unused state */
   bool getState();
   /* Set move to nothing in case of unlawful move */
