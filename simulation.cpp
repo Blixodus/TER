@@ -163,13 +163,12 @@ void Simulation::setDiameter(int d) {
 }
 
 void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
-  std::cout << "addReac" << std::endl;
   int tr1 = findTypeID(r1);
   int tr2 = findTypeID(r2);
   int tp1 = findTypeID(p1);
   int tp2 = findTypeID(p2);
-  if(tr1 == -1 && tr2 == -1) {
-    std::cerr << "" << std::endl;
+  if(tr1 == -1 && tr2 == -1 || tp1 == -1 && tp2 == -1) {
+    std::cerr << "Undefined reaction types" << std::endl;
   }
   /* Check if reaction exists with same r1 and r2 */
   for(Reaction* r : reaction_list) {
