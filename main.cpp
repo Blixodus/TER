@@ -7,8 +7,10 @@
 #include "typemolecule.h"
 #include "reaction.h"
 #include "parser.h"
+#include <stdio.h>
 
 EntitySimulation simulation;
+extern FILE* yyin;
 
 void initSim(void) {
   if(yyparse()) {
@@ -18,7 +20,10 @@ void initSim(void) {
 }
 
 int main(int argc, char** argv) {
+  yyin = fopen(argv[1], "r");
+  if(NULL == yyin) std::exit(0);
   initSim();
+  
   /*
   simulation.setDiameter(5);
   char* E = (char*) "E";
@@ -35,8 +40,8 @@ int main(int argc, char** argv) {
   simulation.setTypeMoleculeSize(s, 4);
   simulation.setTypeMoleculeSize(p, 4);
   */
+  
   simulation.run(10);
-  
-  
+    
   return 0;
 }

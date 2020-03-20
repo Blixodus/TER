@@ -8,7 +8,7 @@ extern "C" int yylex();
 extern int yyparse();
 extern FILE* yyin;
 extern "C" int yywrap();
-  
+
 extern EntitySimulation simulation;
   
 void yyerror(const char* s);
