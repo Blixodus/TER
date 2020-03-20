@@ -1,19 +1,21 @@
 #include <iostream>
 #include <cstdlib>
-#include "simulation.h"
+#include "abstractsimulation.h"
+#include "entitysimulation.h"
+#include "populationsimulation.h"
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
-#include "parser.h"
+//#include "parser.h"
 
-Simulation simulation;
+EntitySimulation simulation;
 
-void initSim(void) {
+/*void initSim(void) {
   if(yyparse()) {
     std::cout << "Parser error, aborting!" << std::endl;
     std::exit(0);
   }
-}
+}*/
 
 int main(int argc, char** argv) {
   //initSim();

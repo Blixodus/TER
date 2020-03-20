@@ -1,14 +1,14 @@
-#ifndef SIMULATION_H
-#define SIMULATION_H
+#ifndef ENTITYSIMULATION_H
+#define ENTITYSIMULATION_H
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
 #include "vec3.h"
+#include "abstractsimulation.h"
 #include <vector>
 
-class Simulation {
+class EntitySimulation : public AbstractSimulation {
  private:
-  int diameter;
   std::vector<TypeMolecule*> typemolecule_list;
   std::vector<Reaction*> reaction_list;
   std::vector<Molecule*> molecule_list;
@@ -27,18 +27,18 @@ class Simulation {
   /* Print reactions in simulation */
   void printReactions(void) const;
  public:
-  Simulation();
+  EntitySimulation();
   /* Set simulation diameter (used by parser) */
-  void setDiameter(int);
+  void setDiameter(int) override;
   /* Add reaction/molecule/type of molecule to simulation (used by parser) */
-  void addReaction(char*, char*, char*, char*, float);
-  void addMolecule(char*, int);
-  void addTypeMolecule(char*);
+  void addReaction(char*, char*, char*, char*, float) override;
+  void addMolecule(char*, int) override;
+  void addTypeMolecule(char*) override;
   /* Set molecule type parameters (used by parser) */
-  void setTypeMoleculeSpeed(char*, float);
-  void setTypeMoleculeSize(char*, int);
-  /* Run the simulation for t ticks, default 1 tick */
-  void run(int);
+  void setTypeMoleculeSpeed(char*, float) override;
+  void setTypeMoleculeSize(char*, int) override;
+  /* Run the simulation for t ticks */
+  void run(int) override;
 };
 
 #endif

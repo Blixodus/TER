@@ -1,13 +1,15 @@
 %{
 #include <iostream>
-#include "simulation.h"
+#include "abstractsimulation.h"
+#include "entitysimulation.h"
+#include "populationsimulation.h"
   
 extern "C" int yylex();
 extern int yyparse();
 extern FILE* yyin;
 extern "C" int yywrap();
   
-extern Simulation simulation;
+extern EntitySimulation simulation;
   
 void yyerror(const char* s);
 %}

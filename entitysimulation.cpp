@@ -1,25 +1,25 @@
-#include "simulation.h"
+#include "entitysimulation.h"
 #include <cfloat>
 #include <cmath>
 #include <cstring>
 #include <iostream>
 
-Simulation::Simulation() : typemolecule_list(), reaction_list(), molecule_list() {
+EntitySimulation::EntitySimulation() : AbstractSimulation(), typemolecule_list(), reaction_list(), molecule_list() {
 }
 
-int Simulation::findTypeID(char* name) const {
+int EntitySimulation::findTypeID(char* name) const {
   for(TypeMolecule* t : typemolecule_list) {
     if(!strcmp(name, t->name)) return t->type_id;
   }
   return -1;
 }
 
-bool Simulation::checkBounds(Vec3* v, int t) const {
+bool EntitySimulation::checkBounds(Vec3* v, int t) const {
   int r = typemolecule_list.at(t)->getSize();
   return 2*(v->length() + r) <= diameter;
 }
 
-bool Simulation::reactOne(int m) {
+bool EntitySimulation::reactOne(int m) {
   bool flag_reacted = false;
   Molecule* mole = molecule_list.at(m);
   Vec3* pos = mole->getPos();
@@ -50,7 +50,7 @@ bool Simulation::reactOne(int m) {
   return flag_reacted;
 }
 
-bool Simulation::reactTwo(int m1, int m2) {
+bool EntitySimulation::reactTwo(int m1, int m2) {
   bool flag_reacted = false;
   Molecule* mole1 = molecule_list.at(m1);
   Molecule* mole2 = molecule_list.at(m2);
@@ -87,7 +87,7 @@ bool Simulation::reactTwo(int m1, int m2) {
   return flag_reacted;
 }
 
-int Simulation::computeTrajectory(int m) {
+int EntitySimulation::computeTrajectory(int m) {
   int r1, r2;
   Molecule* mole = molecule_list.at(m);
   r1 = mole->type.getSize();
@@ -127,7 +127,7 @@ int Simulation::computeTrajectory(int m) {
   return nearest;
 }
 
-void Simulation::print(void) const {
+void EntitySimulation::print(void) const {
   int size = typemolecule_list.size();
   int nbMolecule[size] ;
   for(int i = 0; i < size; i++) {
@@ -143,7 +143,7 @@ void Simulation::print(void) const {
   } 
 }
 
-void Simulation::printReactions(void) const {
+void EntitySimulation::printReactions(void) const {
   for(Reaction* r : reaction_list) {
     int len;
     int* products = r->getProducts(len);
@@ -158,11 +158,11 @@ void Simulation::printReactions(void) const {
   }
 }
 
-void Simulation::setDiameter(int d) {
+void EntitySimulation::setDiameter(int d) {
   diameter = d;
 }
 
-void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
+void EntitySimulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   int tr1 = findTypeID(r1);
   int tr2 = findTypeID(r2);
   int tp1 = findTypeID(p1);
@@ -184,7 +184,7 @@ void Simulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
   reaction_list.push_back(r);
 }
 
-void Simulation::addMolecule(char* name, int amount) {
+void EntitySimulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
   if(t != -1) {
     float x = 0.0;
@@ -200,12 +200,12 @@ void Simulation::addMolecule(char* name, int amount) {
   }
 }
 
-void Simulation::addTypeMolecule(char* name) {
+void EntitySimulation::addTypeMolecule(char* name) {
   TypeMolecule* t = new TypeMolecule(typemolecule_list.size(), name);
   typemolecule_list.push_back(t);
 }
 
-void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
+void EntitySimulation::setTypeMoleculeSpeed(char* name, float speed) {
   int t = findTypeID(name);
   if(t!=-1) typemolecule_list.at(t)->setSpeed(speed);
   else {
@@ -214,7 +214,7 @@ void Simulation::setTypeMoleculeSpeed(char* name, float speed) {
   }
 }
 
-void Simulation::setTypeMoleculeSize(char* name, int size) {
+void EntitySimulation::setTypeMoleculeSize(char* name, int size) {
   int t = findTypeID(name);
   if(t!=-1) typemolecule_list.at(t)->setSize(size);
   else {
@@ -223,7 +223,7 @@ void Simulation::setTypeMoleculeSize(char* name, int size) {
   }
 }
 
-void Simulation::run(int t) {
+void EntitySimulation::run(int t) {
   std::cout << "Reactions in simulation" << std::endl;
   printReactions();
   std::cout << std::endl << "State before" << std::endl;
