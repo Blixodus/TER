@@ -43,14 +43,13 @@ void yyerror(const char* s);
 			
 %%
 
-/*axiom: type diam listother */
+axiom: type diam listother
 
-axiom: listother
 
 type: 		TYPE listtype SEMI
 		
-listtype: 	ID	
-		    | 	ID COMMA listtype { printf("chanson"); simulation.addTypeMolecule($1);  free($1); }	
+listtype: 	ID
+		    | 	ID COMMA listtype { simulation.addTypeMolecule($1); }	
 		
 diam: 		DIAM EQUAL INT SEMI { simulation.setDiameter($3); }
 		
@@ -62,9 +61,10 @@ other: 		reaction
 	| 	speed	
 	| 	init	
 		
-reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI { simulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5); }
+reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI 
+	{simulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5); }
 		
-morereact: /* Empty */ { $$ = ""; }
+morereact: { $$ = NULL; }
 	| 	PLUS ID { $$ = $2; }
 		
 size: 		SIZE OPARAN ID CPARAN EQUAL INT SEMI { simulation.setTypeMoleculeSize($3, $6); free($3); }

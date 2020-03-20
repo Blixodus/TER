@@ -6,20 +6,20 @@
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
-//#include "parser.h"
+#include "parser.h"
 
 EntitySimulation simulation;
 
-/*void initSim(void) {
+void initSim(void) {
   if(yyparse()) {
     std::cout << "Parser error, aborting!" << std::endl;
     std::exit(0);
   }
-}*/
+}
 
 int main(int argc, char** argv) {
-  //initSim();
-  
+  initSim();
+  /*
   simulation.setDiameter(5);
   char* E = (char*) "E";
   char* s = (char*) "s";
@@ -34,6 +34,7 @@ int main(int argc, char** argv) {
   simulation.setTypeMoleculeSize(E, 10);
   simulation.setTypeMoleculeSize(s, 4);
   simulation.setTypeMoleculeSize(p, 4);
+  */
   simulation.run(10);
   
   

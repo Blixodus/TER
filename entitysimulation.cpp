@@ -8,11 +8,14 @@ EntitySimulation::EntitySimulation() : AbstractSimulation(), typemolecule_list()
 }
 
 int EntitySimulation::findTypeID(char* name) const {
-  for(TypeMolecule* t : typemolecule_list) {
-    if(!strcmp(name, t->name)) return t->type_id;
+  if(name != NULL){
+    for(TypeMolecule* t : typemolecule_list) {
+      if(!strcmp(name, t->name)) return t->type_id;
+    }
   }
   return -1;
 }
+
 
 bool EntitySimulation::checkBounds(Vec3* v, int t) const {
   int r = typemolecule_list.at(t)->getSize();
