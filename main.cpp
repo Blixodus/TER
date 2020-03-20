@@ -16,12 +16,12 @@ void initSim(void) {
 }
 
 int main(int argc, char** argv) {
-  initSim();
+  //initSim();
+  
   simulation.setDiameter(5);
   char* E = (char*) "E";
   char* s = (char*) "s";
   char* p = (char*) "p";
-  
   simulation.addTypeMolecule(E);
   simulation.addTypeMolecule(s);
   simulation.addTypeMolecule(p);

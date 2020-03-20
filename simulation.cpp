@@ -248,7 +248,7 @@ void Simulation::run(int t) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->move();
       }
-      if(reacted) std::cout << "Molecule " << m << " reacted!!" << std::endl;
+      if(reacted) std::cout << "Molecule " << m << " : " << molecule_list.at(m)->type.name << " reacted" << std::endl;
     }
     /* Reset all molecules */
     for(Molecule* m : molecule_list) {
