@@ -206,6 +206,10 @@ void EntitySimulation::addMolecule(char* name, int amount) {
 void EntitySimulation::addTypeMolecule(char* name) {
   TypeMolecule* t = new TypeMolecule(typemolecule_list.size(), name);
   typemolecule_list.push_back(t);
+  for(TypeMolecule* type : typemolecule_list) {
+    std::cout << type << " " << type->name << std::endl;
+  }
+  std::cout << std::endl;
 }
 
 void EntitySimulation::setTypeMoleculeSpeed(char* name, float speed) {

@@ -48,9 +48,9 @@ axiom: type diam listother
 
 type: 		TYPE listtype SEMI
 		
-listtype: 	ID
+listtype: 	ID { simulation.addTypeMolecule($1); }
 		    | 	ID COMMA listtype { simulation.addTypeMolecule($1); }	
-		
+	        
 diam: 		DIAM EQUAL INT SEMI { simulation.setDiameter($3); }
 		
 listother: 	other
