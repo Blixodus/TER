@@ -1,3 +1,4 @@
+# solver = entity
 espece E, s, p, Es;
 diametre = 1000;
 taille(E) = 7;
