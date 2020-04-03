@@ -9,8 +9,8 @@ extern "C" int yylex();
 						
 %%
 
-"# solver = entity"       { return ENTITY; }
-"# solver = population"   { return POPULATION; }
+"# solver = entity"     { return ENTITY; }
+"# solver = population" { return POPULATION; }
 espece			{ return TYPE; }
 diametre 		{ return DIAM; }
 taille 			{ return SIZE; }
