@@ -1,0 +1,99 @@
+Simulation stochastique population centrée.
+
+Principe de base de la méthode par pas de temps (tau-leaping).
+
+        1. on part du temps t = 0, où on connaît les concentrations de tous les
+réactifs (par définition).
+        2. puis on calcule itérativement, par pas de temps constant (tau), les
+concentrations au temps t+tau à partir de ce qu'on connaît au temps t.
+
+On prend comme exemple cet ensemble de 3 réactions:
+
+R1:        E + s -> Es    [p1]
+R2:        Es ->    E + s [p2]
+R3:        Es ->    E + p [p3]
+
+qui correspond à une version très simplifiée de réaction enzymatique où
+l'enzyme E catalyse la réaction s -> p.
+
+A chaque itération, le programme de simulation va calculer
+(stochastiquement) le nombre de fois où chacune des réactions peut se
+produire pendant l'intervalle de temps [t, t+tau]. Cela se fait en
+calculant la «propension» qu'a une réaction à être déclenchée.
+
+Il y a deux cas de figure envisagés, les réaction mono-moléculaires
+(comme les réactions R2 et R3 de l'exemple) et bi-moléculaires (comme la
+réaction R1).
+
+Une réaction mono-moléculaire est «tentée» à chaque pas de temps et le
+nombre de fois où elle sera déclenchée ne dépendra que de la
+concentration (nombre de molécules divisé par le volume du réacteur) de
+l'espèce moléculaire en partie gauche, et de la probabilité
+correspondant à la cinétique de la réaction.
+
+Une réaction bi-moléculaire ne sera «tentée» qu'en cas de collision
+entre les deux molécules. Il faut donc estimer le nombre moyen de
+collisions pendant l'intervalle [t, t+tau] pour calculer la propension.
+
+Donc l'algorithme consiste à boucler sur le temps pas par pas et à
+chaque itération appliquer le bon nombre de fois chaque réaction.
+
+     for (t=0; t < TMAX; t += tau) {
+         for (/* toutes les réactions */) {
+             calculer_propension
+             declenche_reaction
+         }
+     }
+
+Le fait de calculer et de déclencher les réactions de façon séquentielle
+évite le problème bien connu d'éventuelles concentrations négatives.
+
+Mais pour éviter un biais statistique, la boucle intérieure va parcourir
+les réactions dans un ordre diffèrent d'une itération sur l'autre.
+
+La formule du calcul de la propension pour les réactions bi-moléculaires
+est (pour la réaction R1 par exemple):
+
+     prop = (alpha * ([nombre de E] + [nombre de s]) * p1) / volume_reacteur
+
+pour une réaction mono-moléculaire (R2 par exemple):
+
+     prop = [nombre de Es] * p2
+
+La propension est bien sur un nombre flottant (les nombres de molécules
+sont entiers, mais les probabilités flottantes) donc avec une partie
+entière EN = ent(prop) et une partie fractionnaire FR = frac(prop).
+
+On va appliquer «à coup sur» (de façon déterministe) EN fois la
+réaction, et de façons stochastique la partie fractionnaire de la
+propension: on tire un nombre aléatoire entre 0 et 1, s'il est plus
+petit que FR, on applique la réaction une fois de plus.
+
+     n_appl = EN + (rnd > FR) ? 1 : 0;
+
+On n'a plus maintenant qu'a appliquer la réaction: on décrémente le
+(les) réactifs de n_appl, et on incrémente le (les) produits de n_appl.
+
+Le pas de temps choisi est tau = 100 micro-secondes (10000 itérations
+par secondes), la valeur de alpha qui va avec est: alpha = 7.4e-7
+
+Le volume de la vésicule est à calculer en micron-cubes:
+
+     volume = 4/3 * PI * rayon^3
+
+ou bien
+
+     volume = 1/6 * PI * diamètre^3
+
+
+Dernière chose, si la réaction bi-moléculaire implique deux fois le même
+réactif:
+
+     S + S -> xxx
+
+alors il faut diviser par 2  la propension, car on va l'appliquer deux
+fois à S!
+
+
+Vous avez maintenant tout en main pour programmer l'algorithme
+population-centrée!
