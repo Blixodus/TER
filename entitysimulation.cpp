@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
+#include <fstream>
+
 
 EntitySimulation::EntitySimulation() : typemolecule_list(), reaction_list(), molecule_list() {
 }
@@ -148,7 +150,7 @@ int EntitySimulation::computeTrajectory(int m) {
   return nearest;
 }
 
-void EntitySimulation::print(void) const {
+void EntitySimulation::print(int etat) const {
   int size = typemolecule_list.size();
   int nbMolecule[size] ;
   for(int i = 0; i < size; i++) {
@@ -161,7 +163,16 @@ void EntitySimulation::print(void) const {
   }
   for(int i = 0; i < size; i++) {
     std::cout << "-- " << nbMolecule[i] << " molecules of type " << typemolecule_list.at(i)->name << std::endl;
-  } 
+  }
+  //Ouverture en écriture, l'arg app, permet de rajouter à la fin du fichier
+    std::ofstream file("data.csv", std::ios::app); 
+    if(file){
+        file << etat << "\t" << nbMolecule[0] << "\t"<< nbMolecule[1]<< "\t"<< nbMolecule[2]<< "\t"<< nbMolecule[3] << std::endl;
+    }
+    else{
+        std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
+    }
+
 }
 
 void EntitySimulation::addMolecule(char* name, int amount) {
@@ -233,7 +244,16 @@ void EntitySimulation::run(int t) {
   std::cout << "Reactions in simulation" << std::endl;
   printReactions();
   std::cout << std::endl << "State before" << std::endl;
-  print();
+  print(0);
+  //On créer le fichier, version on écrit toujours sur le même ->
+  std::ofstream file("data.csv"); 
+  if(file){
+    file << "Etape" << "\t" << "Es" << "\t"<< "p"<< "\t"<< "s" << "\t" << "E" << std::endl;
+  }
+  else{
+      std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
+  }
+
   for(int i = 0; i < t; i++) {
     for(int m = 0; m < molecule_list.size(); m++) {
       /* Find nearest molecule in trajectory */
@@ -261,6 +281,6 @@ void EntitySimulation::run(int t) {
       m->resetState();
     }
     std::cout << std::endl << "State after " << i+1 << " iterations" << std::endl;
-    print();
+    print(i+1);
   }
 }

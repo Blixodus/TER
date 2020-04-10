@@ -2,6 +2,7 @@ LEX = flex
 YACC = bison -d
 CXX = g++
 
+# Commande pour lancer l'affichage -> gnuplot plot-csv.gnp
 main: main.cpp  entitysimulation.o molecule.o typemolecule.o reaction.o vec3.o parser.o lexer.o
 	$(CXX) main.cpp entitysimulation.o molecule.o typemolecule.o reaction.o vec3.o parser.o lexer.o -o main
 
