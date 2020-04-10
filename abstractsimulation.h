@@ -6,22 +6,18 @@
 
 class AbstractSimulation {
  protected:
-  std::vector<TypeMolecule*> typemolecule_list;
-  std::vector<Reaction*> reaction_list;
   int diameter;
  public:
   AbstractSimulation();
-  /* Find id */
-  int findTypeID(char*) const;
   /* Set simulation diameter (used by parser) */
   void setDiameter(int);
   /* Add reaction/molecule/type of molecule to simulation (used by parser) */
-  void addReaction(char*, char*, char*, char*, float);
+  virtual void addReaction(char*, char*, char*, char*, float) = 0;
   virtual void addMolecule(char*, int) = 0;
-  void addTypeMolecule(char*);
+  virtual void addTypeMolecule(char*) = 0;
   /* Set molecule type parameters (used by parser) */
-  void setTypeMoleculeSpeed(char*, float);
-  void setTypeMoleculeSize(char*, int);
+  virtual void setTypeMoleculeSpeed(char*, float) = 0;
+  virtual void setTypeMoleculeSize(char*, int) = 0;
   /* Run the simulation for t ticks */
   virtual void run(int) = 0;
 };

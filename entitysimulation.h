@@ -9,7 +9,11 @@
 
 class EntitySimulation : public AbstractSimulation {
  private:
+  std::vector<TypeMolecule*> typemolecule_list;
+  std::vector<Reaction*> reaction_list;
   std::vector<Molecule*> molecule_list;
+  /* Find id */
+  int findTypeID(char*) const;
   /* Check that a point is within boundaries */
   bool checkBounds(Vec3*, int) const;
   /* Try to react one molecule */
@@ -24,8 +28,13 @@ class EntitySimulation : public AbstractSimulation {
   void printReactions(void) const;
  public:
   EntitySimulation();
-  /* Add molecule to simulation (used by parser) */
+  /* Add reaction/molecule/type of molecule to simulation (used by parser) */
+  void addReaction(char*, char*, char*, char*, float) override;
   void addMolecule(char*, int) override;
+  void addTypeMolecule(char*) override;
+  /* Set molecule type parameters (used by parser) */
+  void setTypeMoleculeSpeed(char*, float) override;
+  void setTypeMoleculeSize(char*, int) override;
   /* Run the simulation for t ticks */
   void run(int) override;
 };

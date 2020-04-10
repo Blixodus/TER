@@ -4,12 +4,36 @@
 #include <cstring>
 #include <iostream>
 
-EntitySimulation::EntitySimulation() : AbstractSimulation(), molecule_list() {
+EntitySimulation::EntitySimulation() : AbstractSimulation(), typemolecule_list(), reaction_list(), molecule_list() {
 }
 
 bool EntitySimulation::checkBounds(Vec3* v, int t) const {
   int r = typemolecule_list.at(t)->getSize();
   return 2*(v->length() + r) <= diameter;
+}
+
+void EntitySimulation::printReactions(void) const {
+  for(Reaction* r : reaction_list) {
+    int len;
+    int* products = r->getProducts(len);
+    const char* r1 = (r->r1==-1)?"None":typemolecule_list.at(r->r1)->name;
+    const char* r2 = (r->r2==-1)?"None":typemolecule_list.at(r->r2)->name;
+    for(int i = 0; i < len; i++) {
+      const char* p1 = (products[2*i]==-1)?"None":typemolecule_list.at(products[2*i])->name;
+      const char* p2 = (products[2*i+1]==-1)?"None":typemolecule_list.at(products[2*i+1])->name;
+      std::cout << r1 << " + " << r2 << " -> " << p1 << " + " << p2 << std::endl;
+    }
+    delete [] products;
+  }
+}
+
+int EntitySimulation::findTypeID(char* name) const {
+  if(name != NULL){
+    for(TypeMolecule* t : typemolecule_list) {
+      if(!strcmp(name, t->name)) return t->type_id;
+    }
+  }
+  return -1;
 }
 
 bool EntitySimulation::reactOne(int m) {
@@ -136,21 +160,6 @@ void EntitySimulation::print(void) const {
   } 
 }
 
-void EntitySimulation::printReactions(void) const {
-  for(Reaction* r : reaction_list) {
-    int len;
-    int* products = r->getProducts(len);
-    const char* r1 = (r->r1==-1)?"None":typemolecule_list.at(r->r1)->name;
-    const char* r2 = (r->r2==-1)?"None":typemolecule_list.at(r->r2)->name;
-    for(int i = 0; i < len; i++) {
-      const char* p1 = (products[2*i]==-1)?"None":typemolecule_list.at(products[2*i])->name;
-      const char* p2 = (products[2*i+1]==-1)?"None":typemolecule_list.at(products[2*i+1])->name;
-      std::cout << r1 << " + " << r2 << " -> " << p1 << " + " << p2 << std::endl;
-    }
-    delete [] products;
-  }
-}
-
 void EntitySimulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
   if(t != -1) {
@@ -162,6 +171,55 @@ void EntitySimulation::addMolecule(char* name, int amount) {
       molecule_list.push_back(m);
     }
   } else {
+    std::cerr << "Undefined molecule type " << name << std::endl;
+    exit(0);
+  }
+}
+
+void EntitySimulation::addReaction(char* r1, char* r2, char* p1, char* p2, float p) {
+  int tr1 = findTypeID(r1);
+  int tr2 = findTypeID(r2);
+  int tp1 = findTypeID(p1);
+  int tp2 = findTypeID(p2);
+  if(tr1 == -1 && tr2 == -1 || tp1 == -1 && tp2 == -1) {
+    std::cerr << "Undefined reaction types" << std::endl;
+    exit(0);
+  }
+  /* Check if reaction exists with same r1 and r2 */
+  for(Reaction* r : reaction_list) {
+    if(r->r1 == tr1 && r->r2 == tr2) {
+      r->add(tp1, tp2, p);
+      return;
+    }
+  }
+  /* Otherwise create new reaction */
+  Reaction* r = new Reaction(tr1, tr2, reaction_list.size());
+  r->add(tp1, tp2, p);
+  reaction_list.push_back(r);
+}
+
+void EntitySimulation::addTypeMolecule(char* name) {
+  TypeMolecule* t = new TypeMolecule(typemolecule_list.size(), name);
+  typemolecule_list.push_back(t);
+  for(TypeMolecule* type : typemolecule_list) {
+    std::cout << type << " " << type->name << std::endl;
+  }
+  std::cout << std::endl;
+}
+
+void EntitySimulation::setTypeMoleculeSpeed(char* name, float speed) {
+  int t = findTypeID(name);
+  if(t!=-1) typemolecule_list.at(t)->setSpeed(speed);
+  else {
+    std::cerr << "Undefined molecule type " << name << std::endl;
+    exit(0);
+  }
+}
+
+void EntitySimulation::setTypeMoleculeSize(char* name, int size) {
+  int t = findTypeID(name);
+  if(t!=-1) typemolecule_list.at(t)->setSize(size);
+  else {
     std::cerr << "Undefined molecule type " << name << std::endl;
     exit(0);
   }
