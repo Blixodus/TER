@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "populationsimulation.h"
 
-PopulationSimulation::PopulationSimulation() : AbstractSimulation() {
+PopulationSimulation::PopulationSimulation() : reaction_list(), typemolecule_list() {
   molecule_list = NULL;
 }
 
@@ -15,7 +15,7 @@ void PopulationSimulation::print(void) const {
   }
 }
 
-void PopulationSimulation::addMolecule(char* name, int amount) override {
+void PopulationSimulation::addMolecule(char* name, int amount) {
   /* If molecule_list is empty, give it the same size as typemolecule_list */
   if(NULL == molecule_list) {
     length_molecule_list = typemolecule_list.size();
@@ -32,7 +32,7 @@ void PopulationSimulation::addMolecule(char* name, int amount) override {
   }
 }
 
-void PopulationSimulation::run(int t_max) override {
+void PopulationSimulation::run(int t_max) {
   /* Each iteration is tau = 100µs */
   double alpha = 7.4e-7;
   for(int t = 0; t < t_max; t++) {
@@ -46,7 +46,7 @@ void PopulationSimulation::run(int t_max) override {
       float p = r->p
       if(r1 != -1 && r2 != -1) {
 	/* Calculate propensity */
-	double prop = (alpha * (molecule_list[r1] + molecule_list[r2]) * )
+	double prop = (alpha * (molecule_list[r1] + molecule_list[r2]))
 	/* Do reactions */
 
       } else {
