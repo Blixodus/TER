@@ -4,7 +4,11 @@
 #include <cstring>
 #include <iostream>
 
-EntitySimulation::EntitySimulation() : AbstractSimulation(), typemolecule_list(), reaction_list(), molecule_list() {
+EntitySimulation::EntitySimulation() : typemolecule_list(), reaction_list(), molecule_list() {
+}
+
+void EntitySimulation::setDiameter(int d) {
+  diameter = d;
 }
 
 bool EntitySimulation::checkBounds(Vec3* v, int t) const {

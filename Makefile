@@ -2,8 +2,8 @@ LEX = flex
 YACC = bison -d
 CXX = g++
 
-main: main.cpp abstractsimulation.o populationsimulation.o entitysimulation.o molecule.o typemolecule.o reaction.o vec3.o parser.o lexer.o
-	$(CXX) main.cpp abstractsimulation.o populationsimulation.o entitysimulation.o molecule.o typemolecule.o reaction.o vec3.o parser.o lexer.o -o main
+main: main.cpp  entitysimulation.o molecule.o typemolecule.o reaction.o vec3.o parser.o lexer.o
+	$(CXX) main.cpp entitysimulation.o molecule.o typemolecule.o reaction.o vec3.o parser.o lexer.o -o main
 
 lexer.o: lexer.c
 	$(CXX) -lfl -c lexer.c 
@@ -17,14 +17,11 @@ lexer.c: lexer.l
 parser.c: parser.y
 	$(YACC) -o parser.c parser.y
 
-populationsimulation.o: populationsimulation.cpp
-	$(CXX) -c populationsimulation.cpp
+#populationsimulation.o: populationsimulation.cpp
+#	$(CXX) -c populationsimulation.cpp
 
 entitysimulation.o: entitysimulation.cpp
 	$(CXX) -c entitysimulation.cpp
-
-abstractsimulation.o: abstractsimulation.cpp
-	$(CXX) -c abstractsimulation.cpp
 
 molecule.o: molecule.cpp
 	$(CXX) -c molecule.cpp

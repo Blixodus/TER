@@ -4,11 +4,11 @@
 #include "typemolecule.h"
 #include "reaction.h"
 #include "vec3.h"
-#include "abstractsimulation.h"
 #include <vector>
 
-class EntitySimulation : public AbstractSimulation {
+class EntitySimulation {
  private:
+  int diameter;
   std::vector<TypeMolecule*> typemolecule_list;
   std::vector<Reaction*> reaction_list;
   std::vector<Molecule*> molecule_list;
@@ -28,15 +28,17 @@ class EntitySimulation : public AbstractSimulation {
   void printReactions(void) const;
  public:
   EntitySimulation();
+  /* Set simulation diameter (used by parser) */
+  void setDiameter(int);
   /* Add reaction/molecule/type of molecule to simulation (used by parser) */
-  void addReaction(char*, char*, char*, char*, float) override;
-  void addMolecule(char*, int) override;
-  void addTypeMolecule(char*) override;
+  void addReaction(char*, char*, char*, char*, float);
+  void addMolecule(char*, int);
+  void addTypeMolecule(char*);
   /* Set molecule type parameters (used by parser) */
-  void setTypeMoleculeSpeed(char*, float) override;
-  void setTypeMoleculeSize(char*, int) override;
+  void setTypeMoleculeSpeed(char*, float);
+  void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks */
-  void run(int) override;
+  void run(int);
 };
 
 #endif
