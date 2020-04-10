@@ -1,7 +1,6 @@
 %{
 #include <iostream>
 #include "entitysimulation.h"
-#include "populationsimulation.h"
   
 extern "C" int yylex();
 extern int yyparse();

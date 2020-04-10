@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include "entitysimulation.h"
-//#include "populationsimulation.h"
 #include "molecule.h"
 #include "typemolecule.h"
 #include "reaction.h"
