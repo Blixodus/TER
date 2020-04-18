@@ -2,43 +2,49 @@
 #define POPULATIONSIMULATION_H
 
 #include <vector>
-#include "abstractsimulation.h"
 
-struct typemolecule {
-  int ID;
+struct Typemolecule_struct {
+  int id;
   char* name;
   float speed;
   int size;
 };
 
-struct reaction {
-  int ID;
+struct Reaction_struct {
+  int id;
   int r1;
   int r2;
   int p1;
   int p2;
-  float prob;
+  float p;
 };
 
-class PopulationSimulation : public AbstractSimulation {
+class PopulationSimulation {
  private:
-  std::vector<reaction*> reaction_list;
-  std::vector<typemolecule*> typemolecule_list;
+  int diameter;
+  std::vector<Reaction_struct*> reaction_list;
+  std::vector<Typemolecule_struct*> typemolecule_list;
   int* molecule_list;
   int length_molecule_list;
+  /* Find id */
+  int findTypeID(char*) const;
   /* Print simulation state */
   void print(void) const;
+  /* Print reactions in simulation */
+  void printReactions(void) const;
  public:
   PopulationSimulation();
+  /* Set simulation diameter (used by parser) */
+  void setDiameter(int);
   /* Add reaction/molecule/type of molecule to simulation (used by parser) */
-  void addReaction(char*, char*, char*, char*, float) override;
-  void addMolecule(char*, int) override;
-  void addTypeMolecule(char*) override;
+  void addReaction(char*, char*, char*, char*, float);
+  void addMolecule(char*, int);
+  void addTypeMolecule(char*);
   /* Set molecule type parameters (used by parser) */
-  void setTypeMoleculeSpeed(char*, float) override;
-  void setTypeMoleculeSize(char*, int) override;
+  void setTypeMoleculeSpeed(char*, float);
+  void setTypeMoleculeSize(char*, int);
   /* Run the simulation for t ticks */
-  void run(int) override;
+  void run(int);
 };
 
 #endif
