@@ -23,7 +23,7 @@ class EntitySimulation {
   /* Calculates the molecule in trajectory if any, parameter position in list, return position in list or -1 if none */
   int computeTrajectory(int) ; //retirer le const -> retire bug sinon pas compatible avec la fonction
   /* Print simulation state */
-  void print(void) const;
+  void print(int) const;
   /* Print reactions in simulation */
   void printReactions(void) const;
  public:
