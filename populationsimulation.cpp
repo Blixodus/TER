@@ -15,8 +15,10 @@ PopulationSimulation::PopulationSimulation() : reaction_list(), typemolecule_lis
 /* PRIVATE METHODS */
 
 int PopulationSimulation::findTypeID(char* name) const {
-  for(Typemolecule_struct* t : typemolecule_list) {
-    if(!strcmp(t->name, name)) return t->id;
+  if(NULL != name) {
+    for(Typemolecule_struct* t : typemolecule_list) {
+      if(!strcmp(t->name, name)) return t->id;
+    }
   }
   return -1;
 }
