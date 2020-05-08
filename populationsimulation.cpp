@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <ctime>
 #include <cstdlib>
+#include <fstream>
 #include "populationsimulation.h"
 
 PopulationSimulation::PopulationSimulation() : reaction_list(), typemolecule_list() {
@@ -23,9 +24,21 @@ int PopulationSimulation::findTypeID(char* name) const {
   return -1;
 }
 
-void PopulationSimulation::print(void) const {
+void PopulationSimulation::print(int etat) const {
+  std::cout<<etat<< "---"<< length_molecule_list<<std::endl;
+
   for(int i = 0; i < length_molecule_list; i++) {
     std::cout << "-- " << molecule_list[i] << " molecules of type " << typemolecule_list.at(i)->name << std::endl;
+  }
+
+  //Ouverture en écriture, l'arg app, permet de rajouter à la fin du fichier
+  std::ofstream file("data.csv", std::ios::app); 
+if(file){
+      file<<"coucou"<<std::endl;
+      file << etat << "\t" << molecule_list[0] << "\t"<< molecule_list[1]<< "\t"<< molecule_list[2]<< "\t"<< molecule_list[3] << std::endl;
+  }
+  else{
+      std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
   }
 }
 
@@ -103,11 +116,22 @@ void PopulationSimulation::run(int t_max) {
   /* Each iteration is tau = 100µs */
   double alpha = 7.4e-7;
   double volume = 1./6 * M_PI * pow(diameter, 3);
+
+  //On créer le fichier, version on écrit toujours sur le même ->
+  std::ofstream file("data.csv"); 
+  if(file){
+    file << "Etape" << "\t" << "Es" << "\t"<< "p"<< "\t"<< "s" << "\t" << "E" << std::endl;
+  }
+  else{
+      std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
+  }
+
   for(int t = 0; t < t_max; t++) {
     std::cout << "ITERATION " << t << std::endl;
     /* Shuffle reaction_list */
     std::random_shuffle(reaction_list.begin(), reaction_list.end());
-    print();
+    print(t+1);
+  
     for(Reaction_struct* r : reaction_list) {
       int r1 = r->r1;
       int r2 = r->r2;
