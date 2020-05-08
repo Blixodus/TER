@@ -178,9 +178,9 @@ void EntitySimulation::print(int etat) const {
 void EntitySimulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
   if(t != -1) {
-    float x = 0.0;
-    float y = 0.0;
-    float z = 0.0;
+    float x = (rand()%(2*diameter))-diameter;
+    float y = (rand()%(2*diameter))-diameter;
+    float z = (rand()%(2*diameter))-diameter;
     for(int i = 0; i < amount; i++) {
       Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
       molecule_list.push_back(m);
@@ -200,6 +200,7 @@ void EntitySimulation::addReaction(char* r1, char* r2, char* p1, char* p2, float
     std::cerr << "Undefined reaction types" << std::endl;
     exit(0);
   }
+
   /* Check if reaction exists with same r1 and r2 */
   for(Reaction* r : reaction_list) {
     if(r->r1 == tr1 && r->r2 == tr2) {
@@ -259,12 +260,13 @@ void EntitySimulation::run(int t) {
       /* Find nearest molecule in trajectory */
       int collision = computeTrajectory(m);
       bool collides = (collision != -1);
-      bool reacted;
+      bool reacted = false;
       /* In case of collision try to react */
       if(collides) reacted = reactTwo(m, collision);
+      std::cout << collides << reacted << std::endl;
       /* In case of no collision or no reaction try to react alone */
       if(!collides || !reacted) reacted = reactOne(m);
-      /* In case of no collision and no reaction move */
+      /* In case of no collision and no reaction do not move */
       if(collides && !reacted) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->noMove();
