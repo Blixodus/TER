@@ -24,7 +24,6 @@ Molecule::~Molecule() {
 }
 
 void Molecule::computeMove() {
-  srand(time(NULL));
   float pi = 3.14159f;
   float r = type.getSpeed();
   float theta = pi*(float)rand()/(float)RAND_MAX;

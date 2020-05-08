@@ -1,16 +1,12 @@
 # solver = entity
 espece E, s, p, Es;
-<<<<<<< HEAD
-diametre = 100;
-=======
-diametre = 10;
->>>>>>> 5863e1315726271f253364a5fd448591809b2c9b
+diametre = 300;
 taille(E) = 7;
 vitesse(E) = 0.5;
-init(E) = 500;
-init(s) = 500;
-init(p) = 500;
-init(Es) = 500;
+init(E) = 50;
+init(s) = 50;
+init(p) = 50;
+init(Es) = 50;
 E + s -> Es [0.3];
 Es -> E + s [0.002];
 Es -> E + p [0.005];
