@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
   if(solver) {
     entitySimulation.run(10);
   } else {
-    
+    populationSimulation.run(10);
   }
     
   return 0;

@@ -30,11 +30,12 @@ void PopulationSimulation::print(void) const {
 }
 
 void PopulationSimulation::printReactions(void) const {
+  std::cout << reaction_list.size() << std::endl;
   for(Reaction_struct* r : reaction_list) {
-    char* r1 = typemolecule_list.at(r->r1)->name;
-    char* r2 = typemolecule_list.at(r->r2)->name;
-    char* p1 = typemolecule_list.at(r->p1)->name;
-    char* p2 = typemolecule_list.at(r->p2)->name;
+    const char* r1 = (r->r1!=-1)?typemolecule_list.at(r->r1)->name:"None";
+    const char* r2 = (r->r2!=-1)?typemolecule_list.at(r->r2)->name:"None";
+    const char* p1 = (r->p1!=-1)?typemolecule_list.at(r->p1)->name:"None";
+    const char* p2 = (r->p2!=-1)?typemolecule_list.at(r->p2)->name:"None";
     std::cout << p1 << " + " << p2 << " -> " << r1 << " + " << r2 << std::endl;
   }
 }
@@ -57,6 +58,7 @@ void PopulationSimulation::addReaction(char* r1, char* r2, char* p1, char* p2, f
   r->p1 = id_p1;
   r->p2 = id_p2;
   r->p = p;
+  reaction_list.push_back(r);
 }
 
 void PopulationSimulation::addMolecule(char* name, int amount) {
@@ -106,7 +108,7 @@ void PopulationSimulation::run(int t_max) {
     std::cout << "ITERATION " << t << std::endl;
     /* Shuffle reaction_list */
     std::random_shuffle(reaction_list.begin(), reaction_list.end());
-    printReactions();
+    print();
     for(Reaction_struct* r : reaction_list) {
       int r1 = r->r1;
       int r2 = r->r2;

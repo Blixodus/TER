@@ -75,7 +75,7 @@ other: 		reaction
 		
 reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI {
 				if(solver){entitySimulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5);} 
-				/*else{populationSimulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5);}*/
+				else{populationSimulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5);}
 	}
 		
 morereact: { $$ = NULL; }
@@ -83,17 +83,17 @@ morereact: { $$ = NULL; }
 		
 size: 		SIZE OPARAN ID CPARAN EQUAL INT SEMI { 
 				if(solver){entitySimulation.setTypeMoleculeSize($3, $6); free($3);}
-				/*else {populationSimulation.setTypeMoleculeSize($3, $6); free($3);} */
+				else {populationSimulation.setTypeMoleculeSize($3, $6); free($3);}
 			}
 		
 speed: 		SPEED OPARAN ID CPARAN EQUAL FLOAT SEMI { 
 				if(solver){entitySimulation.setTypeMoleculeSpeed($3, $6); free($3);}
-				/*else {populationSimulation.setTypeMoleculeSpeed($3, $6); free($3);}*/ 
+				else {populationSimulation.setTypeMoleculeSpeed($3, $6); free($3);}
 			}
 		
 init: 		INIT OPARAN ID CPARAN EQUAL INT SEMI { 
 				if(solver){entitySimulation.addMolecule($3, $6); free($3);}
-				/*else{populationSimulation.addMolecule($3, $6); free($3);}*/ 
+				else{populationSimulation.addMolecule($3, $6); free($3);}
 			}
 		
 %%
