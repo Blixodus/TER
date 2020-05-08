@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include <time.h>
 
 
 EntitySimulation::EntitySimulation() : typemolecule_list(), reaction_list(), molecule_list() {
@@ -178,10 +179,12 @@ void EntitySimulation::print(int etat) const {
 void EntitySimulation::addMolecule(char* name, int amount) {
   int t = findTypeID(name);
   if(t != -1) {
-    float x = 0.0;
-    float y = 0.0;
-    float z = 0.0;
+    srand(time(0));
+
     for(int i = 0; i < amount; i++) {
+      float x = rand() % (diameter +1);
+      float y = rand() % (diameter +1);
+      float z = rand() % (diameter +1);
       Molecule* m = new Molecule(*typemolecule_list.at(t), x, y, z);
       molecule_list.push_back(m);
     }
