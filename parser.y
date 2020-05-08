@@ -61,12 +61,12 @@ listtype: 	ID { if(solver) {entitySimulation.addTypeMolecule($1);}
 			 }	
 	        
 diam: 		DIAM EQUAL INT SEMI { if(solver){entitySimulation.setDiameter($3);}
-								  /*else {populationSimulation.setDiameter($3);}*/
+								  else {populationSimulation.setDiameter($3);}
 
 			}
 		
 listother: 	other
-	| 	other listother
+| 	other listother
 		
 other: 		reaction	
 	| 	size
@@ -75,7 +75,7 @@ other: 		reaction
 		
 reaction: 	ID morereact ARROW ID morereact OBRACKET FLOAT CBRACKET SEMI {
 				if(solver){entitySimulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5);} 
-				else{populationSimulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5);}
+				/*else{populationSimulation.addReaction($1, $2, $4, $5, $7); free($1); free($2); free($4); free($5);}*/
 	}
 		
 morereact: { $$ = NULL; }
