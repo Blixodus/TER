@@ -30,7 +30,6 @@ void PopulationSimulation::print(void) const {
 }
 
 void PopulationSimulation::printReactions(void) const {
-  std::cout << reaction_list.size() << std::endl;
   for(Reaction_struct* r : reaction_list) {
     const char* r1 = (r->r1!=-1)?typemolecule_list.at(r->r1)->name:"None";
     const char* r2 = (r->r2!=-1)?typemolecule_list.at(r->r2)->name:"None";
@@ -134,7 +133,8 @@ void PopulationSimulation::run(int t_max) {
 	int e = prop;
 	double f = prop-e;
 	double r = (double)std::rand() / (float)RAND_MAX;
-	int num_appl = e + (r<f)?1:0;
+	int num_appl = e + ((r<f)?1:0);
+	//std::cout << prop << " " << e << " " << num_appl << std::endl;
 	/* Do reactions */
 	molecule_list[r1] -= num_appl;
 	molecule_list[r2] -= num_appl;
@@ -146,7 +146,8 @@ void PopulationSimulation::run(int t_max) {
 	int e = prop;
 	double f = prop-e;
 	double r = (double)std::rand() / (float)RAND_MAX;
-	int num_appl = e + (r<f)?1:0;
+	int num_appl = e + ((r<f)?1:0);
+	//std::cout << prop << " " << e << " " << num_appl << std::endl;
         /* Do reactions */
 	molecule_list[r1] -= num_appl;
 	molecule_list[p1] += num_appl;
