@@ -29,7 +29,7 @@ class PopulationSimulation {
   /* Find id */
   int findTypeID(char*) const;
   /* Print simulation state */
-  void print(void) const;
+  void print(int) const;
   /* Print reactions in simulation */
   void printReactions(void) const;
  public:
