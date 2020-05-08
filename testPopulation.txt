@@ -1,12 +1,12 @@
-# solver = population
+# solver = entity
 espece E, s, p, Es;
 diametre = 1000;
 taille(E) = 7;
 vitesse(E) = 0.5;
-init(E) = 5008000000;
-init(s) = 804000000;
-init(p) = 400004000;
-init(Es) = 1350000000;
+init(E) = 50;
+init(s) = 80;
+init(p) = 40;
+init(Es) = 135;
 E + s -> Es [0.3];
 Es -> E + s [0.002];
 Es -> E + p [0.005];
