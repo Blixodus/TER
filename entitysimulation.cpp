@@ -269,6 +269,7 @@ void EntitySimulation::run(int t) {
   for(int i = 0; i < t; i++) {
     int max = molecule_list.size();
     int collisions = 0;
+    int reactions = 0;
     for(int m = 0; m < max; m++) {
       const char* name = molecule_list.at(m)->type.name;
       //std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
@@ -292,7 +293,8 @@ void EntitySimulation::run(int t) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->move();
       }
-      if(reactedTwo || reactedOne) std::cout << "Molecule " << m << " : " << name << " reacted" << std::endl;
+      if(reactedTwo || reactedOne) reactions++;
+	//std::cout << "Molecule " << m << " : " << name << " reacted" << std::endl;
       if(reactedTwo && !after) {
 	m-=2;
 	max-=2;
@@ -310,5 +312,6 @@ void EntitySimulation::run(int t) {
     std::cout << std::endl << "State after " << i+1 << " iterations" << std::endl;
     print(i+1);
     std::cout << "Collisions : " << collisions << std::endl;
+    std::cout << "Reactions : " << reactions << std::endl;
   }
 }
