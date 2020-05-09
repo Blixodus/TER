@@ -74,7 +74,7 @@ bool EntitySimulation::reactOne(int m) {
   return flag_reacted;
 }
 
-bool EntitySimulation::reactTwo(int m1, int m2) {
+bool EntitySimulation::reactTwo(int m1, int m2, bool& after) {
   bool flag_reacted = false;
   Molecule* mole1 = molecule_list.at(m1);
   Molecule* mole2 = molecule_list.at(m2);
@@ -99,6 +99,7 @@ bool EntitySimulation::reactTwo(int m1, int m2) {
       if(p1 != -1 || p2 != -1) {
 	molecule_list.erase(molecule_list.begin() + m1);
 	molecule_list.erase(molecule_list.begin() + ((m2>m1)?(m2-1):(m2)));
+	if(m2 > m1) after = true;
 	flag_reacted = true;
 	delete mole1;
 	delete mole2;
@@ -268,14 +269,16 @@ void EntitySimulation::run(int t) {
   for(int i = 0; i < t; i++) {
     int max = molecule_list.size();
     for(int m = 0; m < max; m++) {
+      const char* name = molecule_list.at(m)->type.name;
       std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
       /* Find nearest molecule in trajectory */
       int collision = computeTrajectory(m);
       bool collides = (collision != -1);
       bool reactedOne = false;
       bool reactedTwo = false;
+      bool after = false;
       /* In case of collision try to react */
-      if(collides) reactedTwo = reactTwo(m, collision);
+      if(collides) reactedTwo = reactTwo(m, collision, after);
       /* In case of no collision or no reaction try to react alone */
       if(!collides || !reactedTwo) reactedOne = reactOne(m);
       /* In case of no collision and no reaction do not move */
@@ -288,12 +291,12 @@ void EntitySimulation::run(int t) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->move();
       }
-      if(reactedTwo || reactedOne) std::cout << "Molecule " << m << " : " << molecule_list.at(m)->type.name << " reacted" << std::endl;
-      if(reactedTwo) {
+      if(reactedTwo || reactedOne) std::cout << "Molecule " << m << " : " << name << " reacted" << std::endl;
+      if(reactedTwo && !after) {
 	m-=2;
 	max-=2;
       }
-      if(reactedOne) {
+      if(reactedOne || reactedTwo && after) {
 	m-=1;
 	max-=1;
       }

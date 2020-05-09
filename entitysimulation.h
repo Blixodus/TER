@@ -19,7 +19,7 @@ class EntitySimulation {
   /* Try to react one molecule */
   bool reactOne(int);
   /* Try to react two molecules */
-  bool reactTwo(int, int);
+  bool reactTwo(int, int, bool&);
   /* Calculates the molecule in trajectory if any, parameter position in list, return position in list or -1 if none */
   int computeTrajectory(int) ; //retirer le const -> retire bug sinon pas compatible avec la fonction
   /* Print simulation state */
