@@ -158,7 +158,7 @@ void PopulationSimulation::run(int t_max) {
 	double f = prop-e;
 	double r = (double)std::rand() / (float)RAND_MAX;
 	int num_appl = e + ((r<f)?1:0);
-	std::cout << r << "" << prop << " " << e << " " << num_appl << std::endl;
+	std::cout << r << " " << prop << " " << e << " " << num_appl << std::endl;
 	/* Do reactions */
 	molecule_list[r1] -= num_appl;
 	molecule_list[r2] -= num_appl;
