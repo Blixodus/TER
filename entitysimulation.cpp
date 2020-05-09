@@ -266,27 +266,37 @@ void EntitySimulation::run(int t) {
   }
 
   for(int i = 0; i < t; i++) {
-    for(int m = 0; m < molecule_list.size(); m++) {
+    int max = molecule_list.size();
+    for(int m = 0; m < max; m++) {
       std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
       /* Find nearest molecule in trajectory */
       int collision = computeTrajectory(m);
       bool collides = (collision != -1);
-      bool reacted = false;
+      bool reactedOne = false;
+      bool reactedTwo = false;
       /* In case of collision try to react */
-      if(collides) reacted = reactTwo(m, collision);
+      if(collides) reactedTwo = reactTwo(m, collision);
       /* In case of no collision or no reaction try to react alone */
-      if(!collides || !reacted) reacted = reactOne(m);
+      if(!collides || !reactedTwo) reactedOne = reactOne(m);
       /* In case of no collision and no reaction do not move */
-      if(collides && !reacted) {
+      if(collides && !reactedTwo && !reactedOne) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->noMove();
       }
       /* In case of no collision and no reaction move */
-      if(!collides && !reacted) {
+      if(!collides && !reactedTwo && !reactedOne) {
 	molecule_list.at(m)->setUsed();
 	molecule_list.at(m)->move();
       }
-      if(reacted) std::cout << "Molecule " << m << " : " << molecule_list.at(m)->type.name << " reacted" << std::endl;
+      if(reactedTwo || reactedOne) std::cout << "Molecule " << m << " : " << molecule_list.at(m)->type.name << " reacted" << std::endl;
+      if(reactedTwo) {
+	m-=2;
+	max-=2;
+      }
+      if(reactedOne) {
+	m-=1;
+	max-=1;
+      }
     }
     /* Reset all molecules */
     for(Molecule* m : molecule_list) {
