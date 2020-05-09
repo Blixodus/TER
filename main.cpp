@@ -30,6 +30,8 @@ int main(int argc, char** argv) {
   } else {
     populationSimulation.run(10);
   }
+  //Affichage du graphique
+  system("gnuplot plot-csv.gnp");
     
   return 0;
 }
