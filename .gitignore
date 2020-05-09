@@ -47,3 +47,4 @@ lexer.c
 main
 data.csv
 .vscode
+push.sh

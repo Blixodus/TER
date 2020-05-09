@@ -149,7 +149,6 @@ void PopulationSimulation::run(int t_max) {
 	std::cout << "Error in reaction, no products" << std::endl;
 	break;
       }
-      std::cout << "HERE" << std::endl;
       /* If no error simulate! */
       if(r2 != -1) {
 	/* Calculate propensity */
