@@ -98,7 +98,7 @@ bool EntitySimulation::reactTwo(int m1, int m2) {
       }
       if(p1 != -1 || p2 != -1) {
 	molecule_list.erase(molecule_list.begin() + m1);
-	molecule_list.erase(molecule_list.begin() + m2);
+	molecule_list.erase(molecule_list.begin() + ((m2>m1)?(m2-1):(m2)));
 	flag_reacted = true;
 	delete mole1;
 	delete mole2;
@@ -126,10 +126,10 @@ int EntitySimulation::computeTrajectory(int m) {
   float dist_nearest = FLT_MAX;
   Vec3* pos2 = mole->getPos();
   for(int i = 0; i < molecule_list.size(); i++) {
-    //std::cout << i << std::endl;
     /* Skip itself */
     if(i == m) i++;
     if(i >= molecule_list.size()) break;
+    //std::cout << i << " " << molecule_list.at(i) << std::endl;
     Molecule* mole2 = molecule_list.at(i);
     r2 = mole2->type.getSize();
     delete(pos2);
@@ -150,7 +150,12 @@ int EntitySimulation::computeTrajectory(int m) {
       nearest = i;
       dist_nearest = proj_length;
     }
+    delete proj;
+    delete dis;
   }
+  delete pos;
+  delete dir;
+  delete pos2;
   return nearest;
 }
 

@@ -15,6 +15,7 @@ Vec3::Vec3(float x_, float y_, float z_) {
 }
 
 Vec3::Vec3(const Vec3* o) {
+  //std::cout << o->x << " " << o->y << " " << o->z << std::endl;
   x = o->x;
   y = o->y;
   z = o->z;

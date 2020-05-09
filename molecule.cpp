@@ -48,7 +48,7 @@ Vec3* Molecule::getMove() {
 }
 
 Vec3* Molecule::getPos() {
-  std::cout << pos_vect << "    " << move_vect << std::endl;
+  //std::cout << pos_vect << "    " << move_vect << std::endl;
   return new Vec3(pos_vect);
 }
 
