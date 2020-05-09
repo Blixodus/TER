@@ -115,7 +115,7 @@ void PopulationSimulation::run(int t_max) {
   printReactions();
   /* Each iteration is tau = 100µs */
   double alpha = 7.4e-7;
-  double volume = 1./6 * M_PI * pow(diameter, 3);
+  double volume = 1./6 * M_PI * pow(diameter/1000, 3);
   std::cout << volume << std::endl;
 
   //On créer le fichier, version on écrit toujours sur le même ->
