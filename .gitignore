@@ -43,5 +43,7 @@ lexer.c
 # Emacs files
 *~
 
-# Main
+# Others
 main
+data.csv
+.vscode
