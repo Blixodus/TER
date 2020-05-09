@@ -126,14 +126,17 @@ int EntitySimulation::computeTrajectory(int m) {
   float dist_nearest = FLT_MAX;
   Vec3* pos2 = mole->getPos();
   for(int i = 0; i < molecule_list.size(); i++) {
+    //std::cout << i << std::endl;
     /* Skip itself */
     if(i == m) i++;
     if(i >= molecule_list.size()) break;
     Molecule* mole2 = molecule_list.at(i);
     r2 = mole2->type.getSize();
     delete(pos2);
+    //std::cout << "HERE" << std::endl;
     pos2 = mole2->getPos();
     /* Recentre space on pos */
+    //std::cout << "HERE" << std::endl;
     pos2->add(pos);
     Vec3* proj = new Vec3(dir);
     /* Calculate projection of pos2 onto vector dir */
@@ -219,9 +222,9 @@ void EntitySimulation::addTypeMolecule(char* name) {
   TypeMolecule* t = new TypeMolecule(typemolecule_list.size(), name);
   typemolecule_list.push_back(t);
   for(TypeMolecule* type : typemolecule_list) {
-    std::cout << type << " " << type->name << std::endl;
+    //std::cout << type << " " << type->name << std::endl;
   }
-  std::cout << std::endl;
+  //std::cout << std::endl;
 }
 
 void EntitySimulation::setTypeMoleculeSpeed(char* name, float speed) {
@@ -259,6 +262,7 @@ void EntitySimulation::run(int t) {
 
   for(int i = 0; i < t; i++) {
     for(int m = 0; m < molecule_list.size(); m++) {
+      std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
       /* Find nearest molecule in trajectory */
       int collision = computeTrajectory(m);
       bool collides = (collision != -1);
