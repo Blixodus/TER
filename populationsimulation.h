@@ -21,7 +21,7 @@ struct Reaction_struct {
 
 class PopulationSimulation {
  private:
-  int diameter;
+  float diameter;
   std::vector<Reaction_struct*> reaction_list;
   std::vector<Typemolecule_struct*> typemolecule_list;
   int* molecule_list;
