@@ -22,13 +22,14 @@ void initSim(void) {
 
 int main(int argc, char** argv) {
   yyin = fopen(argv[1], "r");
+  int iter = (argc>2)?atoi(argv[2]):10;
   if(NULL == yyin) std::exit(0);
   initSim();
 
   if(solver) {
-    entitySimulation.run(10);
+    entitySimulation.run(iter);
   } else {
-    populationSimulation.run(10);
+    populationSimulation.run(iter);
   }
   //Affichage du graphique
   system("gnuplot plot-csv.gnp");
