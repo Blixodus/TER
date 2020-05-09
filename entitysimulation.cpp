@@ -270,7 +270,7 @@ void EntitySimulation::run(int t) {
     int max = molecule_list.size();
     for(int m = 0; m < max; m++) {
       const char* name = molecule_list.at(m)->type.name;
-      std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
+      //std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
       /* Find nearest molecule in trajectory */
       int collision = computeTrajectory(m);
       bool collides = (collision != -1);
