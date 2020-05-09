@@ -268,6 +268,7 @@ void EntitySimulation::run(int t) {
 
   for(int i = 0; i < t; i++) {
     int max = molecule_list.size();
+    int collisions = 0;
     for(int m = 0; m < max; m++) {
       const char* name = molecule_list.at(m)->type.name;
       //std::cout << m << " : " << molecule_list.at(m)->type.name << std::endl;
@@ -300,6 +301,7 @@ void EntitySimulation::run(int t) {
 	m-=1;
 	max-=1;
       }
+      if(collides) collisions++;
     }
     /* Reset all molecules */
     for(Molecule* m : molecule_list) {
@@ -307,5 +309,6 @@ void EntitySimulation::run(int t) {
     }
     std::cout << std::endl << "State after " << i+1 << " iterations" << std::endl;
     print(i+1);
+    std::cout << "Collisions : " << collisions << std::endl;
   }
 }
