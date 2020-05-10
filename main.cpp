@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
   }
 
   //Affichage du graphique
-  system("gnuplot plot-csv.gnp");
+  system("gnuplot Affichage/plot-csv.gnp");
     
   return 0;
 }
