@@ -45,6 +45,5 @@ lexer.c
 
 # Others
 main
-data.csv
 .vscode
 push.sh
