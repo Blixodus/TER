@@ -34,19 +34,6 @@ replot 'data.csv' using 1:3 title column (3) with lines lw 1 lt rgb "blue"
 # en vert
 #
 
-replot 'data.csv' using 1:4 title column (4) with lines lw 1 lt rgb "green"
-
-#
-# afficher une quatrième courbe du meme fichier, de la colonne 5,
-# en rose
-#
-
-replot 'data.csv' using 1:5 title column (5) with lines lw 1 lt rgb "pink"
-
-#
-# si on affiche dans une image PNG, commenter la ligne suivante
-#
-
 pause -1 "Hit return to continue"
 
 #
