@@ -25,7 +25,6 @@ int PopulationSimulation::findTypeID(char* name) const {
 }
 
 void PopulationSimulation::print(int etat) const {
-  std::cout<<etat<< "---"<< length_molecule_list<<std::endl;
 
   for(int i = 0; i < length_molecule_list; i++) {
     std::cout << "-- " << molecule_list[i] << " molecules of type " << typemolecule_list.at(i)->name << std::endl;
@@ -116,7 +115,6 @@ void PopulationSimulation::run(int t_max) {
   /* Each iteration is tau = 100µs */
   double alpha = 7.4e-7;
   double volume = 1./6 * M_PI * pow(diameter/1000, 3);
-  std::cout << volume << std::endl;
 
   //On créer le fichier, version on écrit toujours sur le même ->
   std::ofstream file("data.csv"); 
@@ -161,7 +159,6 @@ void PopulationSimulation::run(int t_max) {
 	double f = prop-e;
 	double re = (double)std::rand() / (float)RAND_MAX;
 	int num_appl = e + ((re<f)?1:0);
-	std::cout << r->id << " " << prop << " " << e << " " << num_appl << std::endl;
 	/* Limit reactions if negative values */
 	if(molecule_list[r1] < num_appl) num_appl = molecule_list[r1];
 	if(molecule_list[r2] < num_appl) num_appl = molecule_list[r2];
@@ -177,7 +174,6 @@ void PopulationSimulation::run(int t_max) {
 	double f = prop-e;
 	double re = (double)std::rand() / (float)RAND_MAX;
 	int num_appl = e + ((re<f)?1:0);
-	std::cout << r->id << " " << prop << " " << e << " " << num_appl << std::endl;
 	/* Limit reactions if negative values */
 	if(molecule_list[r1] < num_appl) num_appl = molecule_list[r1];
         /* Do reactions */
