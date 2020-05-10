@@ -7,5 +7,5 @@ Notre code prends 2 paramètres en ligne de commande :
 2. Le nombre d'itérations qu va faire notre modèle. 
 
 Par exemple :
-> make
-> ./main fichierTest/reacEnzyme.txt 3000 
+$ make
+$ ./main fichierTest/reacEnzyme.txt 3000 
