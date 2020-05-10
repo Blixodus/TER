@@ -160,6 +160,9 @@ void PopulationSimulation::run(int t_max) {
 	double re = (double)std::rand() / (float)RAND_MAX;
 	int num_appl = e + ((re<f)?1:0);
 	std::cout << r->id << " " << prop << " " << e << " " << num_appl << std::endl;
+	/* Limit reactions if negative values */
+	if(molecule_list[r1] < num_appl) num_appl = molecule_list[r1];
+	if(molecule_list[r2] < num_appl) num_appl = molecule_list[r2];
 	/* Do reactions */
 	molecule_list[r1] -= num_appl;
 	molecule_list[r2] -= num_appl;
@@ -173,6 +176,8 @@ void PopulationSimulation::run(int t_max) {
 	double re = (double)std::rand() / (float)RAND_MAX;
 	int num_appl = e + ((re<f)?1:0);
 	std::cout << r->id << " " << prop << " " << e << " " << num_appl << std::endl;
+	/* Limit reactions if negative values */
+	if(molecule_list[r1] < num_appl) num_appl = molecule_list[r1];
         /* Do reactions */
 	molecule_list[r1] -= num_appl;
 	molecule_list[p1] += num_appl;
