@@ -1,4 +1,4 @@
-# solver = entity
+# solver = population
 espece UE, UGE, p1, LE, m1, LGE, CF6, Ei5, CF4, CF3, Ei2, CF1, p2, m2;
 diametre = 26;
 init(UE) = 30;
