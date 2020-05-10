@@ -177,7 +177,9 @@ void EntitySimulation::print(int etat) const {
   //Ouverture en écriture, l'arg app, permet de rajouter à la fin du fichier
     std::ofstream file("data.csv", std::ios::app); 
     if(file){
-        file << etat << "\t" << nbMolecule[0] << "\t"<< nbMolecule[1]<< "\t"<< nbMolecule[2]<< "\t"<< nbMolecule[3] << std::endl;
+      file << etat << "\t" << nbMolecule[0] << "\t"<< nbMolecule[1]<< std::endl;
+
+        // file << etat << "\t" << nbMolecule[0] << "\t"<< nbMolecule[1]<< "\t"<< nbMolecule[2]<< "\t"<< nbMolecule[3] << std::endl;
     }
     else{
         std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
@@ -260,7 +262,8 @@ void EntitySimulation::run(int t) {
   //On créer le fichier, version on écrit toujours sur le même ->
   std::ofstream file("data.csv"); 
   if(file){
-    file << "Etape" << "\t" << "Es" << "\t"<< "p"<< "\t"<< "s" << "\t" << "E" << std::endl;
+    // file << "Etape" << "\t" << "Es" << "\t"<< "p"<< "\t"<< "s" << "\t" << "E" << std::endl;
+    file << "Etape" << "\t" << "m2" << "\t"<< "p2" << std::endl;
   }
   else{
       std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;

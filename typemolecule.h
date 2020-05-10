@@ -1,6 +1,12 @@
 #ifndef TYPEMOLECULE_H
 #define TYPEMOLECULE_H
 
+/**
+ * @file typemolecule.cpp
+ * @brief Initialise la taille et la vitesse pour une molécule.
+ * 
+ */
+
 class TypeMolecule {
  private:
   float speed;

@@ -3,8 +3,15 @@
 #include "typemolecule.h"
 #include "vec3.h"
 
+/**
+ * @file molecule.cpp
+ * @brief Gère le déplacement des molécules dans la simulation.
+ */
+
 class Molecule {
+
  private:
+  /* Position vector */
   Vec3* pos_vect;
   /* Movement vector */
   Vec3* move_vect;
@@ -14,6 +21,7 @@ class Molecule {
   bool flag_move;
   /* Compute next move */
   void computeMove();
+
  public:
   const TypeMolecule type;
   Molecule(TypeMolecule&, float, float, float);

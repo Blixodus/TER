@@ -5,7 +5,10 @@
 #include "reaction.h"
 #include "vec3.h"
 #include <vector>
-
+/**
+ * @file entitysimulation.cpp 
+ * @brief Lance la simulation suivant le modèle entité-centré
+ */
 class EntitySimulation {
  private:
   int diameter;
