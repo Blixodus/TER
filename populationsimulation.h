@@ -2,7 +2,10 @@
 #define POPULATIONSIMULATION_H
 
 #include <vector>
-
+/**
+ * @brief Lance la simulation en suivant le modèle population-centré.
+ * 
+ */
 struct Typemolecule_struct {
   int id;
   char* name;

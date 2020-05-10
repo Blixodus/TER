@@ -1,6 +1,10 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+/**
+ * @file vec3.cpp
+ * @brief Initialise une classe de vecteur à 3 dimensions.
+ */
 
 class Vec3 {
  private:

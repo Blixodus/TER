@@ -2,7 +2,10 @@
 #define REACTION_H
 #include <vector>
 
-
+/**
+ * @file reaction.cpp
+ * @brief Initialise notre réaction.
+ */
 class Reaction {
  private:
   /* r1 + r2 -> products [prob] */
